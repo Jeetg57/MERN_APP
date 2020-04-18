@@ -3,7 +3,7 @@
 
 TO START THIS APP LOCALLY:
 
-> npm install
-> npm client-install
-> npm run dev
+* npm install
+* npm client-install
+* npm run dev
 
