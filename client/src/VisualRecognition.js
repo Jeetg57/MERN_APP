@@ -21,7 +21,7 @@ class VisualRecognition extends Component {
   };
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Results are: {this.state.result}</h1>
         <h2>{this.state.percentage * 100}% sure</h2>
         <button onClick={this.handleClick} className="btn btn-primary">

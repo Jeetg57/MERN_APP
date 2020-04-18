@@ -7,6 +7,7 @@ import {
   ToastsStore,
   ToastsContainerPosition,
 } from "react-toasts";
+import { Link } from "react-router-dom";
 export const APIURL = "http://localhost:5000";
 
 class VisualRecognitionModel extends Component {
@@ -62,7 +63,7 @@ class VisualRecognitionModel extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <form onSubmit={this.onFormSubmit}>
           <h1>File Upload</h1>
           <input type="file" name="image" onChange={this.onChange} />
@@ -80,8 +81,8 @@ class VisualRecognitionModel extends Component {
           {
             <div className="d-flex flex-row bd-highlight mb-3 flex-wrap justify-content-center">
               {this.state.images.map((image) => (
-                <div className="card">
-                  <div key={image._id} className="p-2 bd-highlight">
+                <div className="card" key={image._id}>
+                  <div className="p-2 bd-highlight">
                     <img
                       src={image.path}
                       className="card-img-top photoImg"
@@ -89,9 +90,9 @@ class VisualRecognitionModel extends Component {
                     ></img>
                   </div>
                   <div className="card-body d-flex flex-row justify-content-between">
-                    <button className="p-2 btn btn-primary">
-                      Go somewhere
-                    </button>
+                    <Link to={`/${image._id}`} className="btn btn-primary">
+                      Go to image
+                    </Link>
                     <button
                       onClick={this.deleteImage}
                       id={image._id}
