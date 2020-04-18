@@ -1,5 +1,5 @@
 # MERN Stack app
-##This is a simple implementation of the MERN stack, integrated with IBM visual recognition
+## This is a simple implementation of the MERN stack, integrated with IBM visual recognition
 
 TO START THIS APP LOCALLY:
 
