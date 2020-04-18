@@ -4,3 +4,8 @@
   max-height: 350px;
   width: 350px;
 }
+
+.card {
+  max-width: 350px;
+  margin: 10px;
+}

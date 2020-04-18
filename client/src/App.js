@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header container mt-4">
-        {/* <VisualRecognition /> */}
+        <VisualRecognition />
         <VisualRecognitionModel />
       </header>
     </div>

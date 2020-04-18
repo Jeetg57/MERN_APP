@@ -18,6 +18,7 @@ class VisualRecognitionModel extends Component {
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   getPhotos = () =>
@@ -45,6 +46,19 @@ class VisualRecognitionModel extends Component {
   onChange(e) {
     this.setState({ file: e.target.files[0] });
   }
+  deleteImage(e) {
+    axios
+      .delete(`/images/${e.target.id}`)
+      .then((res) => {
+        ToastsStore.success(
+          `Successfully deleted ${res.data.deletedCount} image`
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    this.getPhotos();
+  }
 
   render() {
     return (
@@ -66,12 +80,26 @@ class VisualRecognitionModel extends Component {
           {
             <div className="d-flex flex-row bd-highlight mb-3 flex-wrap justify-content-center">
               {this.state.images.map((image) => (
-                <div key={image._id} className="p-2 bd-highlight">
-                  <img
-                    src={image.path}
-                    className="img-thumbnail photoImg"
-                    alt={image.filename}
-                  ></img>
+                <div className="card">
+                  <div key={image._id} className="p-2 bd-highlight">
+                    <img
+                      src={image.path}
+                      className="card-img-top photoImg"
+                      alt={image.filename}
+                    ></img>
+                  </div>
+                  <div className="card-body d-flex flex-row justify-content-between">
+                    <button className="p-2 btn btn-primary">
+                      Go somewhere
+                    </button>
+                    <button
+                      onClick={this.deleteImage}
+                      id={image._id}
+                      className="p-2 btn btn-danger"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
