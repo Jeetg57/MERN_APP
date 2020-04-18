@@ -17,7 +17,6 @@ function VisualRecognitionIdentify({ match }) {
     } catch (err) {
       console.log(err);
     }
-  };
 
   return (
     <div className="container">
