@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Result = require("../models/Result");
-
+var VisualRecognitionV3 = require("watson-developer-cloud/visual-recognition/v3");
+var fs = require("fs");
 //ROUTES
 
 //get back all the posts
@@ -22,6 +23,36 @@ router.get("/:resultId", async (req, res) => {
     res.json({ message: error });
   }
 });
+
+router.get("/test/:imagePath", async (req, res) => {
+  try {
+    var visualRecognition = new VisualRecognitionV3({
+      version: "2018-03-19",
+      iam_apikey: "zix8PHQYHiiqO4naCsELzIsgRgGn1pxzRYi-9kd4zFcE",
+    });
+
+    var images_file = fs.createReadStream(`./uploads/${req.params.imagePath}`);
+    var classifier_ids = ["RashIdentificationModel_1554186704"];
+    var threshold = 0.6;
+
+    var params = {
+      images_file: images_file,
+      classifier_ids: classifier_ids,
+      threshold: threshold,
+    };
+    var dataResponse;
+    visualRecognition.classify(params, async function (err, response) {
+      if (err) {
+        console.log(err);
+      } else {
+        await res.json(response);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //Delete result
 router.delete("/:resultId", async (req, res) => {
   try {

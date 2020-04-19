@@ -27,11 +27,6 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/info" className="nav-link">
-                IBM PULL{" "}
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to="/upload" className="nav-link">
                 Upload Image{" "}
               </Link>
