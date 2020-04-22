@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const fileUpload = require("express-fileupload");
 const Image = require("../models/Images");
 const multer = require("multer");
 const path = require("path");

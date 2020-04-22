@@ -40,12 +40,28 @@ router.get("/test/:imagePath", async (req, res) => {
       classifier_ids: classifier_ids,
       threshold: threshold,
     };
-    var dataResponse;
     visualRecognition.classify(params, async function (err, response) {
       if (err) {
         console.log(err);
       } else {
-        await res.json(response);
+        var path = req.params.imagePath;
+        Result.findOne({ "images.image": path }, async (err, obj) => {
+          const result = new Result({
+            images: response.images,
+            custom_classes: response.custom_classes,
+            images_processed: response.images_processed,
+          });
+          try {
+            if (obj === null) {
+              const savedResult = await result.save();
+              await res.json(savedResult);
+            } else {
+              res.json(obj);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        });
       }
     });
   } catch (err) {

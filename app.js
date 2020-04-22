@@ -16,7 +16,6 @@ app.use("/images", imageRoute);
 app.use(express.static(__dirname + "/uploads/"));
 
 //connect to db
-
 mongoose.connect(
   process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },

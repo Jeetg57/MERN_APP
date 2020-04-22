@@ -31,6 +31,11 @@ function Navbar() {
                 Upload Image{" "}
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/results" className="nav-link">
+                All Results
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>
