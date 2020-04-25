@@ -36,6 +36,16 @@ function Navbar() {
                 All Results
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/ocr" className="nav-link">
+                OCR
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/chart" className="nav-link">
+                Charts
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

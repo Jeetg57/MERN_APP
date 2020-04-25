@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 export const APIURL = "http://localhost:5000";
 
-class VisualRecognitionModel extends Component {
+class OCR extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +23,7 @@ class VisualRecognitionModel extends Component {
   }
 
   getPhotos = () =>
-    axios.get("/images").then((response) => {
+    axios.get("/ocr").then((response) => {
       console.log(response.data);
       this.setState({ images: response.data });
     });
@@ -37,7 +37,7 @@ class VisualRecognitionModel extends Component {
       },
     };
     axios
-      .post("/images/upload", formData, config)
+      .post("/ocr/ocr-upload", formData, config)
       .then((response) => {
         ToastsStore.success("The file is successfully uploaded");
         this.getPhotos();
@@ -49,7 +49,7 @@ class VisualRecognitionModel extends Component {
   }
   deleteImage(e) {
     axios
-      .delete(`/images/${e.target.id}`)
+      .delete(`/ocr/${e.target.id}`)
       .then((res) => {
         ToastsStore.success(
           `Successfully deleted ${res.data.deletedCount} image`
@@ -65,7 +65,7 @@ class VisualRecognitionModel extends Component {
     return (
       <div className="container">
         <form onSubmit={this.onFormSubmit}>
-          <h1>File Upload</h1>
+          <h1>OCR Scanner</h1>
           <input type="file" name="image" onChange={this.onChange} />
           <button type="submit" className="btn btn-secondary">
             Upload
@@ -84,10 +84,11 @@ class VisualRecognitionModel extends Component {
                 <div className="card" key={image._id}>
                   <div className="p-2 bd-highlight">
                     <img
-                      src={image.path}
+                      src={`/ocr/${image.path}`}
                       className="card-img-top photoImg"
                       alt={image.filename}
                     ></img>
+                    <p>{image.text}</p>
                   </div>
                   <div className="card-body d-flex flex-row justify-content-between">
                     <Link to={`/${image._id}`} className="btn btn-primary">
@@ -106,7 +107,6 @@ class VisualRecognitionModel extends Component {
             </div>
           }
         </div>
-
         <ToastsContainer
           store={ToastsStore}
           position={ToastsContainerPosition.TOP_RIGHT}
@@ -116,4 +116,4 @@ class VisualRecognitionModel extends Component {
   }
 }
 
-export default VisualRecognitionModel;
+export default OCR;
