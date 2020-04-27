@@ -14,7 +14,8 @@ app.use("/results", resultRoute);
 const imageRoute = require("./routes/upload");
 app.use("/images", imageRoute);
 app.use(express.static(__dirname + "/uploads/"));
-
+const OCR_Route = require("./routes/OCR");
+app.use("/ocr", OCR_Route);
 //connect to db
 mongoose.connect(
   process.env.DB_CONNECTION,

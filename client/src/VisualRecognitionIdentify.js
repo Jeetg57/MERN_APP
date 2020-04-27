@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import myImg from "./loading.gif";
 function VisualRecognitionIdentify({ match }) {
-  useEffect(() => {
-    getPhotos();
-  }, []);
-
   let [image, setImage] = useState({});
   let [result, setResult] = useState({});
 
-  const getPhotos = async () => {
-    try {
-      await axios.get(`/images/${match.params.imageId}`).then((response) => {
-        const image = response.data;
-        setImage(image);
-        console.log(image);
-        getVisualRecognitionInfo(image.path);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    const getPhotos = async () => {
+      try {
+        await axios.get(`/images/${match.params.imageId}`).then((response) => {
+          const image = response.data;
+          setImage(image);
+          console.log(image);
+          getVisualRecognitionInfo(image.path);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPhotos();
+  }, [match.params.imageId]);
+
   const getVisualRecognitionInfo = async (path) => {
     try {
       await axios.get(`/results/test/${path}`).then((response) => {
@@ -38,7 +38,7 @@ function VisualRecognitionIdentify({ match }) {
         <h1>Image to be scanned</h1>
         <img src={image.path} width="300px" alt=""></img>
         <br></br>
-        <img src={myImg}></img>
+        <img src={myImg} alt="Baby"></img>
         <h4>Scanning...</h4>
         <p>
           If this loading takes too long, it means you might have used an

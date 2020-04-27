@@ -37,7 +37,6 @@ router.post("/upload", upload.single("image"), async (req, res, next) => {
     res.json({ message: err });
   }
 });
-module.exports = router;
 
 router.get("/", async (req, res) => {
   try {
