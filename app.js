@@ -10,12 +10,13 @@ app.use(cors());
 const resultRoute = require("./routes/results");
 const port = process.env.PORT || 5000;
 app.use("/results", resultRoute);
-
+const authRoute = require("./routes/auth");
 const imageRoute = require("./routes/upload");
 app.use("/images", imageRoute);
 app.use(express.static(__dirname + "/uploads/"));
 const OCR_Route = require("./routes/OCR");
 app.use("/ocr", OCR_Route);
+app.use("/user", authRoute);
 //connect to db
 mongoose.connect(
   process.env.DB_CONNECTION,

@@ -3,10 +3,11 @@ const router = express.Router();
 const Result = require("../models/Result");
 var VisualRecognitionV3 = require("watson-developer-cloud/visual-recognition/v3");
 var fs = require("fs");
+const verify = require("../verifyToken");
 //ROUTES
 
 //get back all the posts
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
     const results = await Result.find();
     res.json(results);
