@@ -16,12 +16,16 @@ class Navbar extends Component {
     this.checkAuth();
   }
   checkAuth = () => {
-    if (localStorage.getItem("auth-token") !== null) {
+    if (
+      localStorage.getItem("auth-token") !== null &&
+      localStorage.getItem("expiry") > Math.floor(Date.now() / 1000)
+    ) {
       this.setState(() => ({ isAuthenticated: true }));
     }
   };
   logout = () => {
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("expiry");
     this.checkAuth();
     window.location = "/";
   };
@@ -86,9 +90,12 @@ class Navbar extends Component {
                 )}
                 {this.state.isAuthenticated === true && (
                   <li className="nav-item">
-                    <Link onClick={this.logout} className="nav-link">
+                    <button
+                      onClick={this.logout}
+                      className="nav-link btn btn-link"
+                    >
                       Logout
-                    </Link>
+                    </button>
                   </li>
                 )}
               </ul>

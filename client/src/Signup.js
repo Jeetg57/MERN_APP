@@ -21,20 +21,29 @@ class Signup extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.email);
-    console.log(this.state.password);
+    console.log(this.state);
     const data = {
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
       email: this.state.email,
+      address: this.state.address,
+      phone: this.state.phone,
+      job_title: this.state.job_title,
+      gender: this.state.gender,
+      username: this.state.username,
       password: this.state.password,
     };
     axios
-      .post("/user/login", data)
+      .post("/user/register", data)
       .then((response) => {
-        localStorage.setItem("auth-token", response.data);
-        window.location = "/";
+        console.log(response);
+        window.location = "/login";
       })
       .catch((error) => {
-        this.setState(() => ({ message: error.response.data }));
+        console.log(error.response);
+        this.setState(() => ({
+          message: error.response.data || error.response.data.errmsg,
+        }));
       });
   };
   onChange(e) {
@@ -49,73 +58,112 @@ class Signup extends Component {
           <div>
             <h1 className="card-title text-center">Sign-up</h1>
           </div>
-          <form>
-            <div class="form-row">
-              <div class="form-group col-md-6">
+          <form onSubmit={this.onFormSubmit}>
+            <div className="form-row">
+              <div className="form-group col-md-6">
                 <label>First Name</label>
-                <input type="text" class="form-control"></input>
+                <input
+                  type="text"
+                  name="firstname"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                ></input>
               </div>
-              <div class="form-group col-md-6">
+              <div className="form-group col-md-6">
                 <label>Last Name</label>
-                <input type="text" class="form-control"></input>
+                <input
+                  type="text"
+                  name="lastname"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                ></input>
               </div>
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Email</label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="inputemail"
+                name="email"
                 placeholder="e.g. someone@gmail.com"
+                onChange={(e) => this.onChange(e)}
               ></input>
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Address</label>
               <input
                 type="address"
-                class="form-control"
+                className="form-control"
                 id="inputAddress2"
+                name="address"
+                onChange={(e) => this.onChange(e)}
               ></input>
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
+            <div className="form-row">
+              <div className="form-group col-md-6">
                 <label>Phone</label>
-                <input type="phone" class="form-control"></input>
+                <input
+                  type="phone"
+                  name="phone"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                ></input>
               </div>
-              <div class="form-group col-md-4">
+              <div className="form-group col-md-4">
                 <label>Job Title</label>
-                <input type="text" class="form-control"></input>
+                <input
+                  type="text"
+                  name="job_title"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                ></input>
               </div>
-              <div class="form-group col-md-2">
-                <label for="inputState">Gender</label>
-                <select id="inputState" class="form-control">
-                  <option selected>Female</option>
-                  <option>Male</option>
+              <div className="form-group col-md-2">
+                <label>Gender</label>
+                <select
+                  id="inputState"
+                  name="gender"
+                  onChange={(e) => this.onChange(e)}
+                  className="form-control"
+                >
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
                 </select>
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="form-group col-md-6">
+            <div className="form-group">
+              <div className="form-row">
+                <div className="form-group col-md-6">
                   <label>Username</label>
-                  <input type="username" class="form-control"></input>
+                  <input
+                    type="username"
+                    name="username"
+                    className="form-control"
+                    onChange={(e) => this.onChange(e)}
+                  ></input>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="inputPassword4">Password</label>
+                <div className="form-group col-md-6">
+                  <label>Password</label>
                   <input
                     type="password"
-                    class="form-control"
+                    name="password"
+                    className="form-control"
+                    onChange={(e) => this.onChange(e)}
                     id="inputPassword4"
                   ></input>
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-outline-primary">
+            <button type="submit" className="btn btn-outline-primary">
               Sign up
             </button>
-            <a class="btn btn-link btn-sm" href="/login">
+            <a className="btn btn-link btn-sm" href="/login">
               Already have an account
             </a>
+            {this.state.message.length > 0 && (
+              <div className="bar error">{this.state.message}</div>
+            )}
           </form>
         </div>
       </div>

@@ -24,6 +24,7 @@ class Login extends Component {
       .post("/user/login", data)
       .then((response) => {
         localStorage.setItem("auth-token", response.data);
+        localStorage.setItem("expiry", Math.floor(Date.now() / 1000) + 60 * 60);
         window.location = "/";
       })
       .catch((error) => {
