@@ -36,14 +36,11 @@ class Signup extends Component {
     axios
       .post("/user/register", data)
       .then((response) => {
-        console.log(response);
-        window.location = "/login";
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error.response);
-        this.setState(() => ({
-          message: error.response.data || error.response.data.errmsg,
-        }));
+        this.setState(() => ({ message: error.response.data }));
       });
   };
   onChange(e) {
@@ -127,7 +124,9 @@ class Signup extends Component {
                   onChange={(e) => this.onChange(e)}
                   className="form-control"
                 >
-                  <option value="Female">Female</option>
+                  <option value="Female" defaultChecked>
+                    Female
+                  </option>
                   <option value="Male">Male</option>
                 </select>
               </div>
