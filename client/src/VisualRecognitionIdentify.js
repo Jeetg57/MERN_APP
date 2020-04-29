@@ -8,12 +8,16 @@ function VisualRecognitionIdentify({ match }) {
   useEffect(() => {
     const getPhotos = async () => {
       try {
-        await axios.get(`/images/${match.params.imageId}`).then((response) => {
-          const image = response.data;
-          setImage(image);
-          console.log(image);
-          getVisualRecognitionInfo(image.path);
-        });
+        await axios
+          .get(`/images/${match.params.imageId}`, {
+            headers: { "auth-token": localStorage.getItem("auth-token") },
+          })
+          .then((response) => {
+            const image = response.data;
+            setImage(image);
+            console.log(image);
+            getVisualRecognitionInfo(image.path);
+          });
       } catch (err) {
         console.log(err);
       }
@@ -23,11 +27,15 @@ function VisualRecognitionIdentify({ match }) {
 
   const getVisualRecognitionInfo = async (path) => {
     try {
-      await axios.get(`/results/test/${path}`).then((response) => {
-        const result = response.data.images[0].classifiers[0].classes[0];
-        setResult(result);
-        console.log(result);
-      });
+      await axios
+        .get(`/results/test/${path}`, {
+          headers: { "auth-token": localStorage.getItem("auth-token") },
+        })
+        .then((response) => {
+          const result = response.data.images[0].classifiers[0].classes[0];
+          setResult(result);
+          console.log(result);
+        });
     } catch (err) {
       console.log(err);
     }

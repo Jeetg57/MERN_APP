@@ -3,6 +3,7 @@ const router = express.Router();
 const Image = require("../models/Images");
 const multer = require("multer");
 const path = require("path");
+const verify = require("../verifyToken");
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./uploads");
@@ -15,30 +16,35 @@ var storage = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storage });
-router.post("/upload", upload.single("image"), async (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error("Please upload a file");
-    error.httpStatusCode = 400;
-    return next(error);
-  } else {
-  }
-  const image = new Image({
-    filename: file.filename,
-    path: file.filename,
-    size: file.size,
-    upload_date: new Date(),
-  });
+router.post(
+  "/upload",
+  upload.single("image"),
+  verify,
+  async (req, res, next) => {
+    const file = req.file;
+    if (!file) {
+      const error = new Error("Please upload a file");
+      error.httpStatusCode = 400;
+      return next(error);
+    } else {
+    }
+    const image = new Image({
+      filename: file.filename,
+      path: file.filename,
+      size: file.size,
+      upload_date: new Date(),
+    });
 
-  try {
-    const savedResult = await image.save();
-    res.json(savedResult);
-  } catch (err) {
-    res.json({ message: err });
+    try {
+      const savedResult = await image.save();
+      res.json(savedResult);
+    } catch (err) {
+      res.json({ message: err });
+    }
   }
-});
+);
 
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
     const results = await Image.find().sort({ upload_date: -1 });
 
@@ -48,7 +54,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:imageId", async (req, res) => {
+router.get("/:imageId", verify, async (req, res) => {
   try {
     const result = await Image.findById(req.params.imageId);
     res.json(result);
@@ -57,7 +63,7 @@ router.get("/:imageId", async (req, res) => {
   }
 });
 //Delete result
-router.delete("/:imageId", async (req, res) => {
+router.delete("/:imageId", verify, async (req, res) => {
   try {
     const removed = await Image.deleteOne({ _id: req.params.imageId });
     res.json(removed);

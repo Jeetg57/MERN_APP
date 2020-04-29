@@ -6,17 +6,26 @@ class AllResults extends Component {
     this.state = {
       results: [],
       received: false,
+      message: "",
     };
   }
   componentDidMount() {
     this.getAllResults();
   }
   getAllResults = () =>
-    axios.get("/results").then((response) => {
-      console.log(response.data);
-      this.setState({ results: response.data });
-      this.received = true;
-    });
+    axios
+      .get("/results", {
+        headers: { "auth-token": localStorage.getItem("auth-token") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ results: response.data });
+        this.received = true;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        this.setState(() => ({ message: err.response.data }));
+      });
 
   render() {
     if (this.received === false) {
@@ -47,6 +56,15 @@ class AllResults extends Component {
               ))}
             </div>
           }
+          {this.state.message.length > 0 && (
+            <div className="container">
+              <div className="bar error">{this.state.message}</div>
+              <h3>
+                Your login has expired. Click <a href="/login">here</a> to login
+                again
+              </h3>
+            </div>
+          )}
         </div>
       );
     }

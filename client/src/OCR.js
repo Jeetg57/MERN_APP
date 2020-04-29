@@ -23,10 +23,14 @@ class OCR extends Component {
   }
 
   getPhotos = () =>
-    axios.get("/ocr").then((response) => {
-      console.log(response.data);
-      this.setState({ images: response.data });
-    });
+    axios
+      .get("/ocr", {
+        headers: { "auth-token": localStorage.getItem("auth-token") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ images: response.data });
+      });
   onFormSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
@@ -34,6 +38,7 @@ class OCR extends Component {
     const config = {
       headers: {
         "content-type": "multipart/form-data",
+        "auth-token": localStorage.getItem("auth-token"),
       },
     };
     axios
@@ -49,7 +54,9 @@ class OCR extends Component {
   }
   deleteImage(e) {
     axios
-      .delete(`/ocr/${e.target.id}`)
+      .delete(`/ocr/${e.target.id}`, {
+        headers: { "auth-token": localStorage.getItem("auth-token") },
+      })
       .then((res) => {
         ToastsStore.success(
           `Successfully deleted ${res.data.deletedCount} image`
@@ -57,6 +64,7 @@ class OCR extends Component {
       })
       .catch((error) => {
         console.log(error);
+        ToastsStore.success(`Failed to delete this image`);
       });
     this.getPhotos();
   }

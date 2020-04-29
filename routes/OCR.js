@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const Image = require("../models/OCR-Model");
 const Tesseract = require("tesseract.js");
+const verify = require("../verifyToken");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -17,34 +18,39 @@ var storage = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storage });
-router.post("/ocr-upload", upload.single("image"), async (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error("Please upload a file");
-    error.httpStatusCode = 400;
-    return next(error);
-  } else {
-    Tesseract.recognize("uploads/ocr/" + file.filename, "eng", {
-      logger: (m) => console.log(m),
-    }).then(async ({ data: { text } }) => {
-      const image = new Image({
-        filename: file.filename,
-        path: file.filename,
-        size: file.size,
-        upload_date: new Date(),
-        text: text,
+router.post(
+  "/ocr-upload",
+  upload.single("image"),
+  verify,
+  async (req, res, next) => {
+    const file = req.file;
+    if (!file) {
+      const error = new Error("Please upload a file");
+      error.httpStatusCode = 400;
+      return next(error);
+    } else {
+      Tesseract.recognize("uploads/ocr/" + file.filename, "eng", {
+        logger: (m) => console.log(m),
+      }).then(async ({ data: { text } }) => {
+        const image = new Image({
+          filename: file.filename,
+          path: file.filename,
+          size: file.size,
+          upload_date: new Date(),
+          text: text,
+        });
+        try {
+          const savedResult = await image.save();
+          res.json(savedResult);
+        } catch (err) {
+          res.json({ message: err });
+        }
       });
-      try {
-        const savedResult = await image.save();
-        res.json(savedResult);
-      } catch (err) {
-        res.json({ message: err });
-      }
-    });
+    }
   }
-});
+);
 
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
     const results = await Image.find().sort({ upload_date: -1 });
     res.json(results);

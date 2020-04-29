@@ -11,20 +11,29 @@ class Charts extends Component {
       image_id: [],
       image_size: [],
       received: false,
+      message: "",
     };
   }
 
   getPhotos = async () => {
-    await axios.get("/images").then((response) => {
-      console.log(response.data);
-      this.setState({ images: response.data });
-      this.state.images.map((image) => {
-        this.state.image_id.push(image._id);
-        this.state.image_size.push(image.size / 1000);
-        this.setState({ received: true });
-        return true;
+    await axios
+      .get("/images", {
+        headers: { "auth-token": localStorage.getItem("auth-token") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ images: response.data });
+        this.state.images.map((image) => {
+          this.state.image_id.push(image._id);
+          this.state.image_size.push(image.size / 1000);
+          this.setState({ received: true });
+          return true;
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        this.setState(() => ({ message: err.response.data }));
       });
-    });
     this.renderChart();
   };
 
@@ -113,7 +122,17 @@ class Charts extends Component {
   }
 
   render() {
-    if (this.state.received === true) {
+    if (this.state.message.length > 0) {
+      return (
+        <div className="container">
+          <div className="bar error mt-5">{this.state.message}</div>
+          <h3>
+            Your login has expired. Click <a href="/login">here</a> to login
+            again
+          </h3>
+        </div>
+      );
+    } else if (this.state.received === true) {
       return (
         <div className="container mt-3">
           <div className="img-thumbnail">

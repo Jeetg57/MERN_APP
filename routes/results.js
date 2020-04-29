@@ -16,7 +16,7 @@ router.get("/", verify, async (req, res) => {
   }
 });
 //SPECIFIC Result
-router.get("/:resultId", async (req, res) => {
+router.get("/:resultId", verify, async (req, res) => {
   try {
     const result = await Result.findById(req.params.resultId);
     res.json(result);
@@ -25,7 +25,7 @@ router.get("/:resultId", async (req, res) => {
   }
 });
 
-router.get("/test/:imagePath", async (req, res) => {
+router.get("/test/:imagePath", verify, async (req, res) => {
   try {
     var visualRecognition = new VisualRecognitionV3({
       version: "2018-03-19",
@@ -71,7 +71,7 @@ router.get("/test/:imagePath", async (req, res) => {
 });
 
 //Delete result
-router.delete("/:resultId", async (req, res) => {
+router.delete("/:resultId", verify, async (req, res) => {
   try {
     const removed = await Result.remove({ _id: req.params.resultId });
     res.json(removed);
@@ -94,7 +94,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/:resultId", async (req, res) => {
+router.patch("/:resultId", verify, async (req, res) => {
   try {
     const update = await Result.updateOne(
       { _id: req.params.resultId },
