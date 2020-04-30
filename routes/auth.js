@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
     { _id: user._id, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
     process.env.TOKEN_SECRET
   );
-  res.header("auth-token", token).send(token);
+  res.header("auth-token", token).send({ token: token, id: user.id });
 });
 
 module.exports = router;

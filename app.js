@@ -15,6 +15,8 @@ const imageRoute = require("./routes/upload");
 app.use("/images", imageRoute);
 app.use(express.static(__dirname + "/uploads/"));
 const OCR_Route = require("./routes/OCR");
+const userRoute = require("./routes/users");
+app.use("/users", userRoute);
 app.use("/ocr", OCR_Route);
 app.use("/user", authRoute);
 //connect to db
