@@ -1,6 +1,6 @@
 .div-box {
     border-radius: 20px;
-    margin: 20px 0px;
+    margin: 20px 0;
     padding-top: 20px;
 }
 
@@ -20,7 +20,7 @@
 .User-name {
     text-align: center;
     font-size: 22px;
-    margin: 15px 0px 10px;
+    margin: 15px 0 10px;
 }
 
 .designation {

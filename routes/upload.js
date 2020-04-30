@@ -26,7 +26,6 @@ router.post(
       const error = new Error("Please upload a file");
       error.httpStatusCode = 400;
       return next(error);
-    } else {
     }
     const image = new Image({
       filename: file.filename,
