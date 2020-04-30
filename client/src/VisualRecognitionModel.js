@@ -117,7 +117,10 @@ class VisualRecognitionModel extends Component {
                       ></img>
                     </div>
                     <div className="card-body d-flex flex-row justify-content-between">
-                      <Link to={`/${image._id}`} className="btn btn-primary">
+                      <Link
+                        to={`/image/${image._id}`}
+                        className="btn btn-primary"
+                      >
                         Go to image
                       </Link>
                       <button

@@ -37,6 +37,7 @@ class Signup extends Component {
       .post("/user/register", data)
       .then((response) => {
         console.log(response.data);
+        window.location = "/login";
       })
       .catch((error) => {
         console.log(error.response);
@@ -77,13 +78,11 @@ class Signup extends Component {
               </div>
             </div>
             <div className="form-group">
-              <label>Email</label>
+              <label>Username</label>
               <input
-                type="email"
+                type="text"
+                name="username"
                 className="form-control"
-                id="inputemail"
-                name="email"
-                placeholder="e.g. someone@gmail.com"
                 onChange={(e) => this.onChange(e)}
               ></input>
             </div>
@@ -134,11 +133,13 @@ class Signup extends Component {
             <div className="form-group">
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label>Username</label>
+                  <label>Email</label>
                   <input
-                    type="username"
-                    name="username"
+                    type="email"
                     className="form-control"
+                    id="inputemail"
+                    name="email"
+                    placeholder="e.g. someone@gmail.com"
                     onChange={(e) => this.onChange(e)}
                   ></input>
                 </div>

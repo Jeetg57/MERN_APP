@@ -44,7 +44,7 @@ function VisualRecognitionIdentify({ match }) {
     return (
       <div className="container">
         <h1>Image to be scanned</h1>
-        <img src={image.path} width="300px" alt=""></img>
+        <img src={`../${image.path}`} width="300px" alt=""></img>
         <br></br>
         <img src={myImg} alt="Baby"></img>
         <h4>Scanning...</h4>
@@ -57,7 +57,7 @@ function VisualRecognitionIdentify({ match }) {
   } else {
     return (
       <div className="container mt-4">
-        <img src={image.path} width="300px" alt=""></img>
+        <img src={`../${image.path}`} width="300px" alt=""></img>
         <h3>The baby has been identified with {result.class}</h3>
         <h3>{result.score * 100}% sure</h3>
       </div>

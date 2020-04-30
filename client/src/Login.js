@@ -23,9 +23,10 @@ class Login extends Component {
     axios
       .post("/user/login", data)
       .then((response) => {
-        localStorage.setItem("auth-token", response.data);
+        localStorage.setItem("auth-token", response.data.token);
         localStorage.setItem("expiry", Math.floor(Date.now() / 1000) + 60 * 60);
-        window.location = "/";
+        localStorage.setItem("id", response.data.id);
+        window.location = "/dashboard";
       })
       .catch((error) => {
         this.setState(() => ({ message: error.response.data }));
