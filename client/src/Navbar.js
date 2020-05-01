@@ -84,15 +84,22 @@ class Navbar extends Component {
                 <ul className="navbar-nav">
                   {this.state.isAuthenticated === true && (
                     <li className="nav-item">
-                      <Link to="/upload" className="nav-link">
-                        Upload Image{" "}
+                      <Link to="/dashboard" className="nav-link">
+                        Dashboard
                       </Link>
                     </li>
                   )}
                   {this.state.isAuthenticated === true && (
                     <li className="nav-item">
-                      <Link to="/results" className="nav-link">
+                      <Link to="/details" className="nav-link">
                         All Results
+                      </Link>
+                    </li>
+                  )}
+                  {this.state.isAuthenticated === true && (
+                    <li className="nav-item">
+                      <Link to="/details/upload" className="nav-link">
+                        Baby Details Input
                       </Link>
                     </li>
                   )}
@@ -103,13 +110,7 @@ class Navbar extends Component {
                       </Link>
                     </li>
                   )}
-                  {this.state.isAuthenticated === true && (
-                    <li className="nav-item">
-                      <Link to="/chart" className="nav-link">
-                        Charts
-                      </Link>
-                    </li>
-                  )}
+
                   {this.state.isAuthenticated === false && (
                     <li className="nav-item">
                       <Link to="/login" className="nav-link">

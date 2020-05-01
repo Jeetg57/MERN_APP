@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
 .photoImg {
   object-fit: cover;
   min-height: 350px;
@@ -23,4 +24,18 @@
   color: #ba3939;
   background: #ffe0e0;
   border: 1px solid #a33a3a;
+}
+
+.chart {
+  box-shadow: 0 0 15px 0 rgba(191, 191, 191, 1);
+  border-radius: 10px;
+  padding: 10px;
+}
+.db-name {
+  color: #34495e;
+  font-family: "Jost", sans-serif;
+}
+.chart-heading {
+  color: #34495e;
+  font-family: "Jost", sans-serif;
 }

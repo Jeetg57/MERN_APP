@@ -15,6 +15,7 @@ var storage = multer.diskStorage({
     );
   },
 });
+//*Works well
 var upload = multer({ storage: storage });
 router.post(
   "/upload",
@@ -42,7 +43,7 @@ router.post(
     }
   }
 );
-
+//*Works well
 router.get("/", verify, async (req, res) => {
   try {
     const results = await Image.find().sort({ upload_date: -1 });
@@ -52,7 +53,7 @@ router.get("/", verify, async (req, res) => {
     res.json({ message: err });
   }
 });
-
+//*Works well
 router.get("/:imageId", verify, async (req, res) => {
   try {
     const result = await Image.findById(req.params.imageId);
@@ -61,7 +62,7 @@ router.get("/:imageId", verify, async (req, res) => {
     res.json({ message: error });
   }
 });
-//Delete result
+//*Works well
 router.delete("/:imageId", verify, async (req, res) => {
   try {
     const removed = await Image.deleteOne({ _id: req.params.imageId });

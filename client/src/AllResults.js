@@ -14,7 +14,7 @@ class AllResults extends Component {
   }
   getAllResults = () =>
     axios
-      .get("/results", {
+      .get("/metric", {
         headers: { "auth-token": localStorage.getItem("auth-token") },
       })
       .then((response) => {
@@ -36,35 +36,42 @@ class AllResults extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="jumbotron">
           {
-            <div className="d-flex flex-row bd-highlight mb-3 flex-wrap justify-content-center">
+            <table class="table table-bordered table-secondary">
+              <thead>
+                <tr className="thead-dark">
+                  <th scope="col">Image</th>
+                  <th scope="col">Issue</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Height</th>
+                  <th scope="col">Weight</th>
+                  <th scope="col">temperature</th>
+                  <th scope="col">Location</th>
+                </tr>
+              </thead>
               {this.state.results.map((image) => (
-                <div className="card" key={image._id}>
-                  <div className="p-2 bd-highlight">
-                    <img
-                      src={image.images[0].image}
-                      className="card-img-top photoImg"
-                      alt={image.filename}
-                    ></img>
-                  </div>
-                  <p>{image.images[0].classifiers[0].classes[0].class}</p>
-                  <p>
-                    {image.images[0].classifiers[0].classes[0].score * 100}%
-                  </p>
-                </div>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      {" "}
+                      <img
+                        src={image.file.filename}
+                        className="img-fluid p-1 m-0 w-25"
+                        alt={image.file.filename}
+                      />{" "}
+                    </th>
+                    <td>{image.issue}</td>
+                    <td>{image.score}</td>
+                    <td>{image.height}</td>
+                    <td>{image.weight}</td>
+                    <td>{image.temperature}</td>
+                    <td>{image.location}</td>
+                  </tr>
+                </tbody>
               ))}
-            </div>
+            </table>
           }
-          {this.state.message.length > 0 && (
-            <div className="container">
-              <div className="bar error">{this.state.message}</div>
-              <h3>
-                Your login has expired. Click <a href="/login">here</a> to login
-                again
-              </h3>
-            </div>
-          )}
         </div>
       );
     }

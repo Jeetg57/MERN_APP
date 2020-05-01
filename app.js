@@ -16,6 +16,8 @@ app.use("/images", imageRoute);
 app.use(express.static(__dirname + "/uploads/"));
 const OCR_Route = require("./routes/OCR");
 const userRoute = require("./routes/users");
+const metricRoute = require("./routes/metric");
+app.use("/metric", metricRoute);
 app.use("/users", userRoute);
 app.use("/ocr", OCR_Route);
 app.use("/user", authRoute);

@@ -24,7 +24,7 @@ router.get("/:resultId", verify, async (req, res) => {
     res.json({ message: error });
   }
 });
-
+//*Works well
 router.get("/test/:imagePath", verify, async (req, res) => {
   try {
     var visualRecognition = new VisualRecognitionV3({
@@ -70,7 +70,7 @@ router.get("/test/:imagePath", verify, async (req, res) => {
   }
 });
 
-//Delete result
+//*Works well
 router.delete("/:resultId", verify, async (req, res) => {
   try {
     const removed = await Result.remove({ _id: req.params.resultId });
@@ -79,7 +79,7 @@ router.delete("/:resultId", verify, async (req, res) => {
     res.send({ message: err });
   }
 });
-
+//*Works well
 router.post("/", async (req, res) => {
   const result = new Result({
     images: req.body.images,
@@ -93,7 +93,7 @@ router.post("/", async (req, res) => {
     res.json({ message: err });
   }
 });
-
+//! Needs changing
 router.patch("/:resultId", verify, async (req, res) => {
   try {
     const update = await Result.updateOne(
