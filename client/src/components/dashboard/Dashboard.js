@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Chart from "chart.js";
 import axios from "axios";
-import image from "./loading.gif";
+import image from "../../assets/loading.gif";
 class Dashboard extends Component {
   constructor() {
     super();
@@ -54,7 +54,6 @@ class Dashboard extends Component {
     this.renderTemperatureChart();
     this.renderIssueChart();
     this.renderAccuracyChart();
-    console.log(this.state.rash.length);
   };
 
   weightChart = React.createRef();
@@ -224,6 +223,25 @@ class Dashboard extends Component {
           maintainAspectRatio: true,
           //Customize chart options
           legend: false,
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  display: false,
+                },
+                gridLines: {
+                  display: false,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  display: false,
+                },
+              },
+            ],
+          },
         },
       });
     } else {
@@ -254,20 +272,20 @@ class Dashboard extends Component {
             <div className="row">
               <div className="col-md-4">
                 <div className="col-md-10">
-                  <h3>{this.state.images.length}</h3>
-                  <h4>Babies Scanned</h4>
+                  <h3 className="text-center">{this.state.images.length}</h3>
+                  <h4 className="text-center">Babies Scanned</h4>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="col-md-10">
-                  <h3>{this.state.rash.length}</h3>
-                  <h4>Identified with Rash</h4>
+                  <h3 className="text-center">{this.state.rash.length}</h3>
+                  <h4 className="text-center">Identified with Rash</h4>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className="col-md-10">
-                  <h3>{this.state.noIssues.length}</h3>
-                  <h4>Identified with No Issues</h4>
+                <div className="col-md-10 ">
+                  <h3 className="text-center">{this.state.noIssues.length}</h3>
+                  <h4 className="text-center">Identified with No Issues</h4>
                 </div>
               </div>
             </div>
@@ -292,7 +310,7 @@ class Dashboard extends Component {
             <div className="col-md-8 ">
               <div class="col-md-12 chart">
                 <h4 className="chart-heading">
-                  Baby ID Against Temperature in °
+                  Baby ID Against Temperature in °C
                 </h4>
                 <hr />
                 <canvas

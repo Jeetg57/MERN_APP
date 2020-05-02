@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
+import {
+  ToastsContainer,
+  ToastsStore,
+  ToastsContainerPosition,
+} from "react-toasts";
+import loading from "../../assets/formLoading.gif";
+
 class MetricInput extends Component {
   constructor() {
     super();
@@ -11,13 +18,16 @@ class MetricInput extends Component {
       file: null,
       location: "",
       message: "",
+      sending: false,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
   onFormSubmit = (e) => {
     e.preventDefault();
+    this.setState(() => ({ sending: true }));
     const formData = new FormData();
+    ToastsStore.success("Sending Data...");
     formData.append("regID", this.state.regID);
     formData.append("height", this.state.height);
     formData.append("weight", this.state.weight);
@@ -33,11 +43,13 @@ class MetricInput extends Component {
     axios
       .post("/metric", formData, config)
       .then((response) => {
-        console.log(response);
+        this.setState(() => ({ sending: false }));
+        ToastsStore.success("Data Successfully Sent.");
       })
       .catch((error) => {
         this.setState(() => ({ message: error.response.data }));
       });
+    e.target.reset();
   };
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -49,56 +61,57 @@ class MetricInput extends Component {
   render() {
     return (
       <div className="container">
+        {this.state.sending === null}
         <div className="login-form">
           <h1 className="text-center mt-5">Input Baby Details Here</h1>
           <form onSubmit={this.onFormSubmit}>
-            <div class="form-group">
-              <label for="regID">Registration ID</label>
+            <div className="form-group">
+              <label>Registration ID</label>
               <input
                 id="regID"
                 name="regID"
                 placeholder="eg. 12121221"
                 type="text"
                 required="required"
-                class="form-control"
+                className="form-control"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div class="form-group">
-              <label for="height">Baby Height</label>
+            <div className="form-group">
+              <label>Baby Height</label>
               <input
                 id="height"
                 name="height"
                 type="text"
-                class="form-control"
+                className="form-control"
                 required="required"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div class="form-group">
-              <label for="weight">Baby Weight</label>
+            <div className="form-group">
+              <label>Baby Weight</label>
               <input
                 id="weight"
                 name="weight"
                 type="text"
-                class="form-control"
+                className="form-control"
                 required="required"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div class="form-group">
-              <label for="temperature">Baby Temperature</label>
+            <div className="form-group">
+              <label>Baby Temperature</label>
               <input
                 id="temperature"
                 name="temperature"
                 type="text"
-                class="form-control"
+                className="form-control"
                 required="required"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div class="form-group">
-              <label for="File">Input Image</label>
+            <div className="form-group">
+              <label>Input Image</label>
               <input
                 type="file"
                 name="file"
@@ -106,27 +119,46 @@ class MetricInput extends Component {
                 onChange={(e) => this.onFileChange(e)}
               />
             </div>
-            <div class="form-group">
-              <label for="location">Location</label>
+            <div className="form-group">
+              <label>Location</label>
               <input
                 id="location"
                 name="location"
                 type="text"
-                class="form-control"
+                className="form-control"
                 required="required"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div class="form-group">
-              <button
-                name="submit"
-                type="submit"
-                class="btn btn-outline-primary"
-              >
-                Submit
-              </button>
+            <div className="">
+              <div className="form-group">
+                <button
+                  name="submit"
+                  type="submit"
+                  className="btn btn-outline-primary"
+                >
+                  Submit
+                </button>
+                {this.state.sending === true && (
+                  <div>
+                    <span>
+                      <img
+                        src={loading}
+                        alt="loading"
+                        className="ml-3"
+                        style={{ width: "50px" }}
+                      ></img>
+                      <h4>Sending Data, Please Hold On</h4>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </form>
+          <ToastsContainer
+            store={ToastsStore}
+            position={ToastsContainerPosition.TOP_RIGHT}
+          />
         </div>
       </div>
     );

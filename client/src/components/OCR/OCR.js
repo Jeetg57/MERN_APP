@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import "./App.css";
+import "../../App.css";
 import {
   ToastsContainer,
   ToastsStore,
