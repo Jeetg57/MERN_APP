@@ -16,6 +16,7 @@ class Dashboard extends Component {
       areas: [],
       temperature: [],
       score: [],
+      dates: [],
       message: "",
     };
   }
@@ -26,9 +27,9 @@ class Dashboard extends Component {
         headers: { "auth-token": localStorage.getItem("auth-token") },
       })
       .then((response) => {
-        console.log(response.data);
         this.setState({ images: response.data });
         this.state.images.map((image) => {
+          this.state.dates.push(Date.parse(image.date));
           this.state.image_id.push(image.regID);
           this.state.image_size.push(image.weight);
           this.state.height.push(image.height);
@@ -178,7 +179,7 @@ class Dashboard extends Component {
     if (this.state.received === true) {
       const myChartRef = this.issueChart.current.getContext("2d");
       new Chart(myChartRef, {
-        type: "pie",
+        type: "doughnut",
         data: {
           //Bring in data
           labels: ["Rash", "No Issues"],
@@ -267,39 +268,49 @@ class Dashboard extends Component {
         <div className="container mt-3">
           <h1 className="db-name">DASHBOARD</h1>
           <div className="chart">
-            <h4 className="chart-heading">Performance</h4>
+            <div className="row">
+              <h2 className="chart-heading col">Performance</h2>
+              <div className="col text-right"></div>
+            </div>
+
             <hr />
             <div className="row">
               <div className="col-md-4">
                 <div className="col-md-10">
-                  <h3 className="text-center">{this.state.images.length}</h3>
-                  <h4 className="text-center">Babies Scanned</h4>
+                  <h5 className="text-center">Babies Scanned</h5>
+                  <h2 className="text-center count babies">
+                    {this.state.images.length}
+                  </h2>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="col-md-10">
-                  <h3 className="text-center">{this.state.rash.length}</h3>
-                  <h4 className="text-center">Identified with Rash</h4>
+                  <h5 className="text-center">Rash</h5>
+                  <h2 className="text-center count rash">
+                    {this.state.rash.length}
+                  </h2>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="col-md-10 ">
-                  <h3 className="text-center">{this.state.noIssues.length}</h3>
-                  <h4 className="text-center">Identified with No Issues</h4>
+                  <h5 className="text-center">No skin issues</h5>
+                  <h2 className="text-center count no-issues">
+                    {this.state.noIssues.length}
+                  </h2>
                 </div>
               </div>
             </div>
           </div>
           <div className="row mt-4">
             <div className="col-md-6 ">
-              <div class="col-md-12 chart">
+              <div className="col-md-12 chart">
                 <h4 className="chart-heading">Baby ID Against Weight</h4>
                 <hr />
                 <canvas id="weightChart" className="" ref={this.weightChart} />
               </div>
             </div>
             <div className="col-md-6">
-              <div class="col-md-12 chart">
+              <div className="col-md-12 chart">
                 <h4 className="chart-heading">Baby ID Against Height</h4>
                 <hr />
                 <canvas id="heightChart" className="" ref={this.heightChart} />
@@ -308,7 +319,7 @@ class Dashboard extends Component {
           </div>
           <div className="row mt-4">
             <div className="col-md-8 ">
-              <div class="col-md-12 chart">
+              <div className="col-md-12 chart">
                 <h4 className="chart-heading">
                   Baby ID Against Temperature in °C
                 </h4>
@@ -321,7 +332,7 @@ class Dashboard extends Component {
               </div>
             </div>
             <div className="col-md-4">
-              <div class="col-md-12 chart h-100">
+              <div className="col-md-12 chart h-100">
                 <h4 className="chart-heading">Location</h4>
                 <hr />
                 <canvas id="areaChart" className="" ref={this.areaChart} />
@@ -330,14 +341,14 @@ class Dashboard extends Component {
           </div>
           <div className="row mt-4 mb-5">
             <div className="col-md-6 ">
-              <div class="col-md-12 chart">
+              <div className="col-md-12 chart">
                 <h4 className="chart-heading">Skin Issues</h4>
                 <hr />
                 <canvas id="issueChart" className="" ref={this.issueChart} />
               </div>
             </div>
             <div className="col-md-6">
-              <div class="col-md-12 chart">
+              <div className="col-md-12 chart">
                 <h4 className="chart-heading">
                   Accuracy of Visual Recognition in %
                 </h4>

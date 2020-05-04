@@ -98,5 +98,13 @@ router.post("/", upload.single("file"), async (req, res, next) => {
     console.log(err);
   }
 });
+router.delete("/:id", async (req, res) => {
+  try {
+    const removed = await Metric.deleteOne({ _id: req.params.id });
+    res.json(removed);
+  } catch (err) {
+    res.send({ message: err });
+  }
+});
 
 module.exports = router;

@@ -82,6 +82,7 @@ class MetricInput extends Component {
               <input
                 id="height"
                 name="height"
+                placeholder="Height in centimeters"
                 type="text"
                 className="form-control"
                 required="required"
@@ -93,6 +94,7 @@ class MetricInput extends Component {
               <input
                 id="weight"
                 name="weight"
+                placeholder="Weight in grams"
                 type="text"
                 className="form-control"
                 required="required"
@@ -104,6 +106,7 @@ class MetricInput extends Component {
               <input
                 id="temperature"
                 name="temperature"
+                placeholder="Temperature in degree celcius"
                 type="text"
                 className="form-control"
                 required="required"
@@ -115,20 +118,27 @@ class MetricInput extends Component {
               <input
                 type="file"
                 name="file"
+                placeholder="Picture of the baby"
                 className="form-control p-1"
                 onChange={(e) => this.onFileChange(e)}
               />
             </div>
-            <div className="form-group">
-              <label>Location</label>
-              <input
-                id="location"
-                name="location"
-                type="text"
-                className="form-control"
-                required="required"
+            <div class="form-group">
+              <label>State</label>
+              <select
+                id="inputState"
+                class="form-control"
                 onChange={(e) => this.onChange(e)}
-              />
+                name="location"
+              >
+                <option selected>None</option>
+                <option value="Nairobi">Nairobi</option>
+                <option value="Naivasha">Naivasha</option>
+                <option value="Kiambu">Kiambu</option>
+                <option value="Nakuru">Nakuru</option>
+                <option value="Kisumu">Kisumu</option>
+                <option value="Kakamega">Kakamega</option>
+              </select>
             </div>
             <div className="">
               <div className="form-group">

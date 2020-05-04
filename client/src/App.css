@@ -31,11 +31,15 @@
   border-radius: 10px;
   padding: 10px;
 }
+
 .db-name {
   color: #34495e;
   font-family: "Jost", sans-serif;
 }
+
 .chart-heading {
   color: #34495e;
   font-family: "Jost", sans-serif;
 }
+
+.count {}
