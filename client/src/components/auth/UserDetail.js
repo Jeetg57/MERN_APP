@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./userDetail.css";
 import axios from "axios";
 import { FaSignOutAlt } from "react-icons/fa";
+import { AiTwotoneDelete } from "react-icons/ai";
 class UserDetail extends Component {
   constructor() {
     super();
@@ -11,14 +12,13 @@ class UserDetail extends Component {
       message: "",
     };
     this.logout = this.logout.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
   componentDidMount() {
     this.getUser();
   }
   logout = () => {
-    localStorage.removeItem("auth-token");
-    localStorage.removeItem("expiry");
-    localStorage.removeItem("id");
+    localStorage.clear();
     window.location = "/";
   };
   getUser = async () => {
@@ -34,6 +34,19 @@ class UserDetail extends Component {
       })
       .catch((err) => {
         this.setState(() => ({ message: err.response.data }));
+      });
+  };
+  deleteUser = () => {
+    axios
+      .delete(`/users/delete/${localStorage.getItem("id")}`, {
+        headers: { "auth-token": localStorage.getItem("auth-token") },
+      })
+      .then((response) => {
+        window.location = "/";
+        localStorage.clear();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
       });
   };
   render() {
@@ -80,6 +93,11 @@ class UserDetail extends Component {
                     </li>
                   </ul>
                 </div>
+
+                <button onClick={this.deleteUser} className="btn btn-danger">
+                  <AiTwotoneDelete />
+                  Delete My Profile
+                </button>
                 <div className="text-right">
                   <button className="btn btn-dark" onClick={this.logout}>
                     <FaSignOutAlt /> Logout

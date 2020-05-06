@@ -123,9 +123,10 @@ class Signup extends Component {
                   onChange={(e) => this.onChange(e)}
                   className="form-control"
                 >
-                  <option value="Female" defaultChecked>
-                    Female
+                  <option value="" defaultValue>
+                    None
                   </option>
+                  <option value="Female">Female</option>
                   <option value="Male">Male</option>
                 </select>
               </div>
