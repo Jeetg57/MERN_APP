@@ -138,23 +138,14 @@ class Navbar extends Component {
                     >
                       <ul className="navbar nav">
                         <li className="dropdown-item">
-                          <Link
-                            to={`/user/${this.state.id}`}
-                            className="dropdown-item"
-                          >
+                          <Link to="/user/profile" className="dropdown-item">
                             My Profile
                           </Link>
                         </li>
-
-                        <div className="dropdown-divider"></div>
-
                         <li className="dropdown-item">
-                          <button
-                            onClick={this.logout}
-                            className="dropdown-item"
-                          >
+                          <a onClick={this.logout} className="dropdown-item">
                             Logout
-                          </button>
+                          </a>
                         </li>
                       </ul>
                     </div>

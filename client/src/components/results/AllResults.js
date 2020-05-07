@@ -60,16 +60,16 @@ class AllResults extends Component {
       return (
         <div className="container-sm mt-4">
           {
-            <table className="table table-bordered">
+            <table className="table table-borderless custom-tbl">
               <thead>
-                <tr className="">
+                <tr>
                   <th scope="col">Image</th>
                   <th scope="col">Registration ID</th>
                   <th scope="col">Issue</th>
                   <th scope="col">Score</th>
                   <th scope="col">Height</th>
                   <th scope="col">Weight</th>
-                  <th scope="col">temperature</th>
+                  <th scope="col">Temperature</th>
                   <th scope="col">Location</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -85,14 +85,14 @@ class AllResults extends Component {
                         alt={image.file.filename}
                       />{" "}
                     </th>
-                    <td>{image.regID}</td>
-                    <td>{image.issue}</td>
-                    <td>{image.score}/1</td>
-                    <td>{image.height} cm</td>
-                    <td>{image.weight} kg</td>
-                    <td>{image.temperature} °C</td>
-                    <td>{image.location}</td>
-                    <td>
+                    <td className="align-middle">{image.regID}</td>
+                    <td className="align-middle">{image.issue}</td>
+                    <td className="align-middle">{image.score}/1</td>
+                    <td className="align-middle">{image.height} cm</td>
+                    <td className="align-middle">{image.weight} kg</td>
+                    <td className="align-middle">{image.temperature} °C</td>
+                    <td className="align-middle">{image.location}</td>
+                    <td className="align-middle">
                       <button
                         onClick={this.deleteImage}
                         id={image._id}

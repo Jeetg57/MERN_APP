@@ -23,7 +23,7 @@ function App() {
         <Route path="/details" exact component={AllResults} />
         <Route path="/details/upload" exact component={MetricInput} />
         <Route path="/user/edit/:id" component={editUser} />
-        <Route path="/user/:id" component={UserDetail} />
+        <Route path="/user/profile" component={UserDetail} />
         <Route component={Error} />
       </Switch>
     </main>
