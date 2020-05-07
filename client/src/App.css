@@ -74,3 +74,35 @@
 .custom-tbl>tbody>tr {
   border-bottom: #fa4251 2px solid;
 }
+
+.four0four {
+  font-size: 16em;
+}
+
+.four0four-details {
+  font-size: 1.2em;
+}
+
+.my-container {
+  margin: 0 25% 100px;
+  line-height: 180%;
+  font-size: 1.3em;
+  color: #000;
+  text-align: justify;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-font-smoothing: antialiased !important;
+  text-rendering: optimizelegibility !important;
+  letter-spacing: .03em;
+}
+
+.header .heading-text {
+  font-size: 3em;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+}
+
+.my-container>h1 {
+  text-decoration: underline;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

@@ -10,6 +10,7 @@ import UserDetail from "./components/auth/UserDetail";
 import editUser from "./components/auth/editUser";
 import Dashboard from "./components/dashboard/Dashboard";
 import MetricInput from "./components/MetricInputs/MetricInput";
+import four0four from "./components/404/four0four";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/details/upload" exact component={MetricInput} />
         <Route path="/user/edit/:id" component={editUser} />
         <Route path="/user/profile" component={UserDetail} />
+        <Route path="*" component={four0four} />
         <Route component={Error} />
       </Switch>
     </main>
