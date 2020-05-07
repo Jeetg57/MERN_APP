@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Metric = require("../models/Metrics");
 const verify = require("../verifyToken");
-var VisualRecognitionV3 = require("watson-developer-cloud/visual-recognition/v3");
+const VisualRecognitionV3 = require("ibm-watson/visual-recognition/v3");
+const { IamAuthenticator } = require("ibm-watson/auth");
 const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
@@ -40,12 +41,11 @@ router.post("/", upload.single("file"), async (req, res, next) => {
     return next(error);
   }
 
-  let issue;
-  let score;
   try {
     var visualRecognition = new VisualRecognitionV3({
       version: "2018-03-19",
-      iam_apikey: "zix8PHQYHiiqO4naCsELzIsgRgGn1pxzRYi-9kd4zFcE",
+      authenticator: new IamAuthenticator({ apikey: process.env.WATSON_API }),
+      url: "https://gateway.watsonplatform.net/visual-recognition/api",
     });
 
     var images_file = fs.createReadStream(`./uploads/${file.filename}`);
@@ -53,8 +53,8 @@ router.post("/", upload.single("file"), async (req, res, next) => {
     var threshold = 0.6;
 
     var params = {
-      images_file: images_file,
-      classifier_ids: classifier_ids,
+      imagesFile: images_file,
+      classifierIds: classifier_ids,
       threshold: threshold,
     };
     visualRecognition.classify(params, async function (err, response) {
@@ -62,13 +62,13 @@ router.post("/", upload.single("file"), async (req, res, next) => {
       if (err) {
         console.log(err);
       } else {
-        if (response.images[0].classifiers[0].classes[0] === undefined) {
+        if (response.result.images[0].classifiers[0].classes[0] === undefined) {
           res.status(400).send({
             msg: "Unable to determine, please use a better image",
           });
         } else {
-          issue = response.images[0].classifiers[0].classes[0].class;
-          score = response.images[0].classifiers[0].classes[0].score;
+          issue = response.result.images[0].classifiers[0].classes[0].class;
+          score = response.result.images[0].classifiers[0].classes[0].score;
           const metric = new Metric({
             regID: req.body.regID,
             height: req.body.height,

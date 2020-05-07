@@ -64,7 +64,7 @@ router.get("/:imageId", async (req, res) => {
     const result = await Image.findById(req.params.imageId);
     res.json(result);
   } catch (err) {
-    res.json({ message: error });
+    res.json({ message: err });
   }
 });
 
