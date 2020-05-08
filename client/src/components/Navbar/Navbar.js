@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap";
 import "jquery/dist/jquery.slim";
 import Axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 
 class Navbar extends Component {
   constructor() {
@@ -63,7 +64,10 @@ class Navbar extends Component {
         <nav className="navbar navbar-dark bg-dark navbar-expand-sm myNavbar">
           <div className="container">
             <a href="/" className="navbar-brand">
-              Dell Project
+              <AiFillHome
+                className="mr-2"
+                style={{ fontSize: "24px" }}
+              ></AiFillHome>
             </a>
             <button
               className="navbar-toggler"
@@ -117,6 +121,12 @@ class Navbar extends Component {
                     </Link>
                   </li>
                 )}
+
+                <li className="nav-item">
+                  <Link to="/about" className="nav-link">
+                    About us
+                  </Link>
+                </li>
 
                 {this.state.isAuthenticated === true && (
                   <li className="nav-item dropdown">

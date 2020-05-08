@@ -10,7 +10,7 @@
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
     "chart.js": "2.9.3",
-    "jquery": "3.5.0",
+    "jquery": "^3.4.1",
     "popper.js": "1.16.1",
     "react": "16.13.1",
     "react-bootstrap": "1.0.0",
@@ -18,8 +18,7 @@
     "react-icons": "^3.10.0",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
-    "react-toasts": "3.0.6",
-    "watson-developer-cloud": "4.0.1"
+    "react-toasts": "3.0.6"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 .photoImg {
   object-fit: cover;
   min-height: 350px;
@@ -105,4 +106,77 @@
 .my-container>h1 {
   text-decoration: underline;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.homepage {
+  overflow: hidden;
+  margin: auto;
+}
+
+.text-content {
+  margin: auto;
+  width: 50%;
+}
+
+.text-content .head {
+  font-size: 40px;
+  padding-left: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.text-content .head2 {
+  font-size: 60px;
+  padding-left: 40px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-content>a {
+  margin-left: 40px;
+  font-size: 26px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.section-one {
+  padding: 20px 10%;
+}
+
+.section-one>h1 {
+  font-size: 60px;
+  text-decoration: underline;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.text-content>h2 {
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+footer {
+  padding: 50px;
+  background-color: #17202A;
+  color: white;
+}
+
+@media(max-width: 800px) {
+  .my-container {
+    margin: auto;
+  }
+  .text-content .head {
+    font-size: 20px;
+  }
+  .text-content .head2 {
+    font-size: 18px;
+  }
+  .section-one>h1 {
+    font-size: 20px;
+  }
+  .section-one>h2 {
+    font-size: 16px;
+  }
+  .text-content>a {
+    font-size: 16px
+  }
+  .text-content>h2 {
+    font-size: 16px
+  }
 }
