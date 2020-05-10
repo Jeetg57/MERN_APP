@@ -48,6 +48,7 @@ class MetricInput extends Component {
     axios
       .post("/baby-metric", formData, config)
       .then((response) => {
+        this.setState(() => ({ sending: false }));
         ToastsStore.success("Data Successfully Sent.");
       })
       .catch((error) => {
