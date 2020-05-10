@@ -14,8 +14,6 @@ class Login extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.email);
-    console.log(this.state.password);
     const data = {
       email: this.state.email,
       password: this.state.password,

@@ -23,6 +23,11 @@ class MetricInput extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
+  componentDidMount() {
+    if (localStorage.getItem("auth-token") === null) {
+      window.location = "/login";
+    }
+  }
   onFormSubmit = (e) => {
     e.preventDefault();
     this.setState(() => ({ sending: true }));
@@ -41,12 +46,13 @@ class MetricInput extends Component {
       },
     };
     axios
-      .post("/metric", formData, config)
+      .post("/baby-metric", formData, config)
       .then((response) => {
-        this.setState(() => ({ sending: false }));
         ToastsStore.success("Data Successfully Sent.");
       })
       .catch((error) => {
+        ToastsStore.error(error.response.data);
+        this.setState(() => ({ sending: false }));
         this.setState(() => ({ message: error.response.data }));
       });
     e.target.reset();
@@ -123,15 +129,15 @@ class MetricInput extends Component {
                 onChange={(e) => this.onFileChange(e)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>State</label>
               <select
                 id="inputState"
-                class="form-control"
+                className="form-control"
                 onChange={(e) => this.onChange(e)}
                 name="location"
               >
-                <option selected>None</option>
+                <option defaultValue>None</option>
                 <option value="Nairobi">Nairobi</option>
                 <option value="Naivasha">Naivasha</option>
                 <option value="Kiambu">Kiambu</option>
@@ -165,6 +171,9 @@ class MetricInput extends Component {
               </div>
             </div>
           </form>
+          {this.state.message.length > 0 && (
+            <div className="bar error">{this.state.message}</div>
+          )}
           <ToastsContainer
             store={ToastsStore}
             position={ToastsContainerPosition.TOP_RIGHT}

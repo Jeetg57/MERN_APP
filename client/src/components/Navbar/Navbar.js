@@ -108,6 +108,13 @@ class Navbar extends Component {
                 )}
                 {this.state.isAuthenticated === true && (
                   <li className="nav-item">
+                    <Link to="/babyRegistration" className="nav-link">
+                      Baby Registration
+                    </Link>
+                  </li>
+                )}
+                {this.state.isAuthenticated === true && (
+                  <li className="nav-item">
                     <Link to="/ocr" className="nav-link">
                       OCR
                     </Link>
@@ -153,7 +160,12 @@ class Navbar extends Component {
                           </Link>
                         </li>
                         <li className="dropdown-item">
-                          <a onClick={this.logout} className="dropdown-item">
+                          <a
+                            href="/"
+                            onClick={this.logout}
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
                             Logout
                           </a>
                         </li>
