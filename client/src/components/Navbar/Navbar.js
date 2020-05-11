@@ -92,13 +92,13 @@ class Navbar extends Component {
                     </Link>
                   </li>
                 )}
-                {this.state.isAuthenticated === true && (
+                {/* {this.state.isAuthenticated === true && (
                   <li className="nav-item">
                     <Link to="/details" className="nav-link">
                       All Results
                     </Link>
                   </li>
-                )}
+                )} */}
                 {this.state.isAuthenticated === true && (
                   <li className="nav-item">
                     <Link to="/details/upload" className="nav-link">

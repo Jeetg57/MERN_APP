@@ -14,6 +14,14 @@ router.get("/", verify, async (req, res) => {
     res.json({ message: err });
   }
 });
+router.get("/:id", verify, async (req, res) => {
+  try {
+    const results = await Babies.findById(req.params.id);
+    res.json(results);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 
 router.post("/", verify, async (req, res) => {
   const baby = new Babies({
@@ -34,7 +42,7 @@ router.post("/", verify, async (req, res) => {
 });
 router.delete("/:id", async (req, res) => {
   try {
-    const removed = await Metric.deleteOne({ _id: req.params.id });
+    const removed = await Babies.deleteOne({ _id: req.params.id });
     res.json(removed);
   } catch (err) {
     res.send({ message: err });

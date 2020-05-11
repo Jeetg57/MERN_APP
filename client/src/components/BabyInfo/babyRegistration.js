@@ -43,6 +43,7 @@ class babyRegistration extends Component {
       .then((response) => {
         this.setState(() => ({ sending: false }));
         ToastsStore.success("Data Successfully Sent.");
+        window.location = `/babyRegistration/success/${response.data.regId}`;
       })
       .catch((error) => {
         this.setState(() => ({ message: error.response.data }));
