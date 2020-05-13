@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const Image = require("../models/OCR-Model");
-const Tesseract = require("tesseract.js");
+const { createWorker } = require("tesseract.js");
 const verify = require("../verifyToken");
 
 var storage = multer.diskStorage({
@@ -29,9 +29,18 @@ router.post(
       error.httpStatusCode = 400;
       return next(error);
     } else {
-      Tesseract.recognize("uploads/ocr/" + file.filename, "eng", {
+      const worker = createWorker({
         logger: (m) => console.log(m),
-      }).then(async ({ data: { text } }) => {
+      });
+
+      (async () => {
+        await worker.load();
+        await worker.loadLanguage("eng");
+        await worker.initialize("eng");
+        const {
+          data: { text },
+        } = await worker.recognize("uploads/ocr/" + file.filename);
+        await worker.terminate();
         const image = new Image({
           filename: file.filename,
           path: file.filename,
@@ -45,7 +54,7 @@ router.post(
         } catch (err) {
           res.json({ message: err });
         }
-      });
+      })();
     }
   }
 );

@@ -158,6 +158,17 @@
     color: white;
   }
 
+  .babyDetails>.row>.col {
+    font-family: "Jost", sans-serif;
+    font-size: 30px;
+  }
+
+  .babyDetails>.row>.detail_title {
+    font-size: 30px;
+    color: #34495e;
+    font-weight: bold;
+  }
+
   @media(max-width: 800px) {
     .my-container {
       margin: auto;

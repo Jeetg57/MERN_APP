@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const BabyMetrics = require("../models/Babies");
+
 const verify = require("../verifyToken");
 const VisualRecognitionV3 = require("ibm-watson/visual-recognition/v3");
 const { IamAuthenticator } = require("ibm-watson/auth");
@@ -73,17 +74,17 @@ router.post("/", upload.single("file"), verify, async (req, res, next) => {
           issue = response.result.images[0].classifiers[0].classes[0].class;
           score = response.result.images[0].classifiers[0].classes[0].score;
           const metric = {
-            height: req.body.height,
-            weight: req.body.weight,
-            temperature: req.body.temperature,
+            height: Number(req.body.height),
+            weight: Number(req.body.weight),
+            temperature: Number(req.body.temperature),
             file: {
               filename: file.filename,
               path: file.filename,
-              size: file.size,
+              size: Number(file.size),
             },
             location: req.body.location,
             issue: issue,
-            score: score,
+            score: Number(score),
             date: new Date(),
           };
           try {

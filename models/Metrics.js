@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 const MetricSchema = new mongoose.Schema({
-  regID: {
-    type: Number,
-    required: true,
-  },
   height: {
     type: Number,
     required: true,
