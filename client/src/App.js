@@ -8,7 +8,6 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import UserDetail from "./components/auth/UserDetail";
 import editUser from "./components/auth/editUser";
-import Dashboard from "./components/dashboard/Dashboard";
 import MetricInput from "./components/MetricInputs/MetricInput";
 import four0four from "./components/404/four0four";
 import About from "./components/about/About";
@@ -16,6 +15,7 @@ import babyRegistration from "./components/BabyInfo/babyRegistration";
 import babyDash from "./components/dashboard/babyDash";
 import babyDetails from "./components/BabyInfo/babyDetails";
 import successRegistered from "./components/BabyInfo/successRegistered";
+import babyPictures from "./components/BabyInfo/babyPictures";
 
 function App() {
   return (
@@ -36,8 +36,8 @@ function App() {
           path="/babyRegistration/success/:id"
           component={successRegistered}
         />
-        <Route path="/baby/:id" component={babyDetails} />
-
+        <Route path="/baby/:id" exact component={babyDetails} />
+        <Route path="/baby/:id/pictures" exact component={babyPictures} />
         <Route path="*" component={four0four} />
         <Route component={Error} />
       </Switch>

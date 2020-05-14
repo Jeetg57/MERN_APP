@@ -6,6 +6,7 @@ import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
 import day from "dayjs";
+
 class babyDetails extends Component {
   constructor() {
     super();
@@ -37,17 +38,17 @@ class babyDetails extends Component {
       columns: [
         { title: "_id", field: "_id", visible: false },
         {
-          title: "Height",
+          title: "Height (cm)",
           field: "height",
           headerFilter: "input",
         },
         {
-          title: "Weight",
+          title: "Weight (g)",
           field: "weight",
           headerFilter: "input",
         },
         {
-          title: "Temperature",
+          title: "Temperature (°C)",
           field: "temperature",
           headerFilter: "input",
         },
@@ -136,6 +137,13 @@ class babyDetails extends Component {
           //Customize chart options
           legend: false,
           scales: {
+            yAxes: [
+              {
+                ticks: {
+                  min: 35,
+                },
+              },
+            ],
             xAxes: [
               {
                 type: "time",
@@ -191,7 +199,6 @@ class babyDetails extends Component {
     } else {
     }
   };
-
   heightChart = React.createRef();
   renderChart2 = () => {
     Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
@@ -228,7 +235,6 @@ class babyDetails extends Component {
           },
         },
       });
-    } else {
     }
   };
   issueChart = React.createRef();
@@ -315,6 +321,15 @@ class babyDetails extends Component {
             </div>
           </div>
           {this.state.metrics.length > 0 && (
+            <a
+              href={`/baby/${this.state.babies._id}/pictures`}
+              className="btn btn-primary mt-3"
+            >
+              View Pictures
+            </a>
+          )}
+
+          {this.state.metrics.length > 0 && (
             <ReactTabulator
               className="mt-4"
               options={options}
@@ -331,7 +346,8 @@ class babyDetails extends Component {
               There are no available metrics for this baby
             </h1>
           )}
-          <div className="row mt-5 mb-5">
+          <h1>Charts</h1>
+          <div className="row mb-5">
             <div className="col-md-6">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">Month Against Weight</h4>
@@ -351,6 +367,7 @@ class babyDetails extends Component {
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">Skin Issues</h4>
+
                 <hr />
                 <canvas id="issueChart" className="" ref={this.issueChart} />
               </div>

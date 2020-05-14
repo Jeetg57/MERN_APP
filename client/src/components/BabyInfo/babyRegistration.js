@@ -104,8 +104,7 @@ class babyRegistration extends Component {
                   id="phoneNumber"
                   name="phoneNumber"
                   placeholder="Phone Number"
-                  type="text"
-                  maxlength="10"
+                  type="number"
                   required="required"
                   className="form-control"
                   onChange={(e) => this.onChange(e)}
