@@ -65,7 +65,7 @@ class babyRegistration extends Component {
                 <input
                   id="firstName"
                   name="firstName"
-                  placeholder="firstName"
+                  placeholder="First Name"
                   type="text"
                   required="required"
                   className="form-control"
@@ -77,7 +77,7 @@ class babyRegistration extends Component {
                 <input
                   id="lastName"
                   name="lastName"
-                  placeholder="lastName"
+                  placeholder="Last Name"
                   type="text"
                   required="required"
                   className="form-control"
@@ -91,7 +91,7 @@ class babyRegistration extends Component {
                 <input
                   id="parentName"
                   name="parentName"
-                  placeholder="parentName"
+                  placeholder="Parent/Guardians Name"
                   type="text"
                   required="required"
                   className="form-control"
@@ -103,8 +103,9 @@ class babyRegistration extends Component {
                 <input
                   id="phoneNumber"
                   name="phoneNumber"
-                  placeholder="phoneNumber"
+                  placeholder="Phone Number"
                   type="text"
+                  maxlength="10"
                   required="required"
                   className="form-control"
                   onChange={(e) => this.onChange(e)}

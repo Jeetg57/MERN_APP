@@ -5,7 +5,7 @@ import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
-import moment from "moment/moment";
+import day from "dayjs";
 class babyDetails extends Component {
   constructor() {
     super();
@@ -16,6 +16,9 @@ class babyDetails extends Component {
       weights: [],
       dates: [],
       heights: [],
+      temperature: [],
+      rash: 0,
+      noIssues: 0,
       message: "",
     };
   }
@@ -23,7 +26,7 @@ class babyDetails extends Component {
     var value = cell.getValue();
 
     if (value) {
-      value = moment(value).format("ddd do MMM YYYY");
+      value = day(value).format("ddd DD MMM YYYY");
     }
 
     return value;
@@ -39,34 +42,31 @@ class babyDetails extends Component {
           headerFilter: "input",
         },
         {
-          title: "weight",
+          title: "Weight",
           field: "weight",
           headerFilter: "input",
         },
         {
-          title: "temperature",
+          title: "Temperature",
           field: "temperature",
-
           headerFilter: "input",
         },
         {
-          title: "location",
+          title: "Location",
           field: "location",
-
           headerFilter: "input",
         },
         {
-          title: "issue",
+          title: "Issue",
           field: "issue",
-
           headerFilter: "input",
         },
         {
-          title: "score",
+          title: "Score",
           field: "score",
         },
         {
-          title: "date",
+          title: "Date",
           field: "date",
           sorter: "date",
           formatter: this.dateFormatter,
@@ -93,15 +93,63 @@ class babyDetails extends Component {
           // var month = check.format("MMMM");
           this.state.dates.push(item.date);
           this.state.heights.push(item.height);
+          if (item.issue === "Rash") {
+            this.state.rash += 1;
+          } else {
+            this.state.noIssues += 1;
+          }
+          this.state.temperature.push(item.temperature);
           return true;
         });
         this.renderChart();
         this.renderChart2();
+        this.renderIssueChart();
+        this.renderTemperatureChart();
       })
       .catch((err) => {
         console.log(err);
         this.setState({ message: "No Data Found" });
       });
+  };
+  tempreatureChart = React.createRef();
+  renderTemperatureChart = () => {
+    Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
+    if (this.state.received === true) {
+      const myChartRef = this.tempreatureChart.current.getContext("2d");
+      new Chart(myChartRef, {
+        type: "line",
+        data: {
+          //Bring in data
+          labels: this.state.dates.sort(),
+          datasets: [
+            {
+              label: "Temperature",
+              backgroundColor: "rgba(52, 73, 94,0.4)",
+              borderColor: "rgba(52, 73, 94,1)",
+              data: this.state.temperature,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          //Customize chart options
+          legend: false,
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  // min: this.state.babies.birthDate,
+                  unit: "month",
+                },
+              },
+            ],
+          },
+        },
+      });
+    } else {
+    }
   };
   weightChart = React.createRef();
   renderChart = () => {
@@ -183,6 +231,33 @@ class babyDetails extends Component {
     } else {
     }
   };
+  issueChart = React.createRef();
+  renderIssueChart = () => {
+    Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
+    if (this.state.received === true) {
+      const myChartRef = this.issueChart.current.getContext("2d");
+      new Chart(myChartRef, {
+        type: "doughnut",
+        data: {
+          //Bring in data
+          labels: ["Rash", "No Issues"],
+          datasets: [
+            {
+              backgroundColor: ["rgba(231, 76, 60 ,1)", "rgba(88, 214, 141,1)"],
+              data: [this.state.rash, this.state.noIssues],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          //Customize chart options
+          legend: { position: "bottom" },
+        },
+      });
+    } else {
+    }
+  };
 
   render() {
     const options = {
@@ -251,6 +326,11 @@ class babyDetails extends Component {
               rowClick={this.rowClick}
             />
           )}
+          {this.state.metrics.length === 0 && (
+            <h1 className="mt-4 ">
+              There are no available metrics for this baby
+            </h1>
+          )}
           <div className="row mt-5 mb-5">
             <div className="col-md-6">
               <div className="col-md-12 chart">
@@ -267,11 +347,28 @@ class babyDetails extends Component {
               </div>
             </div>
           </div>
-          {this.state.metrics.length === 0 && (
-            <h1 className="mt-4">
-              There are no available metrics for this baby
-            </h1>
-          )}
+          <div className="row mt-4 mb-5">
+            <div className="col-md-6 ">
+              <div className="col-md-12 chart">
+                <h4 className="chart-heading">Skin Issues</h4>
+                <hr />
+                <canvas id="issueChart" className="" ref={this.issueChart} />
+              </div>
+            </div>
+            <div className="col-md-6 ">
+              <div className="col-md-12 chart">
+                <h4 className="chart-heading">
+                  Date Scanned Against Temperature in °C
+                </h4>
+                <hr />
+                <canvas
+                  id="temperatureChart"
+                  className=""
+                  ref={this.tempreatureChart}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
