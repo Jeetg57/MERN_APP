@@ -16,8 +16,10 @@ import babyDash from "./components/dashboard/babyDash";
 import babyDetails from "./components/BabyInfo/babyDetails";
 import successRegistered from "./components/BabyInfo/successRegistered";
 import babyPictures from "./components/BabyInfo/babyPictures";
-
+import OneSignal from "react-onesignal";
 function App() {
+  OneSignal.initialize("ff08e594-8a6a-477c-a8ca-b14495e9a6e6");
+
   return (
     <main>
       <Switch>
