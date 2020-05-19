@@ -21,6 +21,15 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>IBM Integration</title>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "ff08e594-8a6a-477c-a8ca-b14495e9a6e6",
+    });
+  });
+</script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
