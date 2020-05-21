@@ -6,7 +6,11 @@ import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
 import day from "dayjs";
-
+import generateAlert from "../Alerts/Alert";
+import * as d3 from "d3";
+import HeightThreshold from "../Alerts/height-threshold.csv";
+import WeightThreshold from "../Alerts/weight-threshold.csv";
+import "chartjs-plugin-annotation";
 class babyDetails extends Component {
   constructor() {
     super();
@@ -17,11 +21,18 @@ class babyDetails extends Component {
       weights: [],
       dates: [],
       heights: [],
+      months: [],
+      threshold: [],
+      boyHeights: [],
+      girlHeights: [],
+      boyWeights: [],
+      girlWeights: [],
       temperature: [],
       rash: 0,
       noIssues: 0,
       message: "",
     };
+    this.getHeightThresholdValues = this.getHeightThresholdValues.bind(this);
   }
   dateFormatter = function (cell, formatterParams) {
     var value = cell.getValue();
@@ -34,6 +45,7 @@ class babyDetails extends Component {
   };
   componentDidMount() {
     this.getPhotos();
+    this.getHeightThresholdValues();
     this.setState({
       columns: [
         { title: "_id", field: "_id", visible: false },
@@ -84,33 +96,59 @@ class babyDetails extends Component {
         headers: { "auth-token": localStorage.getItem("auth-token") },
       })
       .then((response) => {
-        console.log(response.data);
         this.setState({ babies: response.data });
         this.setState({ metrics: response.data.metrics });
         this.setState({ received: true });
         this.state.metrics.map((item) => {
-          this.state.weights.push(item.weight);
-          // var check = moment(item.date, "YYYY/MM/DD");
-          // var month = check.format("MMMM");
-          this.state.dates.push(item.date);
-          this.state.heights.push(item.height);
-          if (item.issue === "Rash") {
-            this.state.rash += 1;
-          } else {
-            this.state.noIssues += 1;
+          var d = new Date(this.state.babies.birthDate);
+          var scanDate = new Date(item.date);
+          const diffTime = Math.abs(scanDate - d);
+          const diffMonths = Math.ceil(diffTime / 2592000000);
+          if (!this.state.months.includes(diffMonths)) {
+            this.state.weights.push(item.weight);
+            this.state.months.push(diffMonths);
+            this.state.dates.push(item.date);
+            this.state.heights.push(item.height);
+            if (item.issue === "Rash") {
+              this.state.rash += 1;
+            } else {
+              this.state.noIssues += 1;
+            }
+            this.state.temperature.push(item.temperature);
           }
-          this.state.temperature.push(item.temperature);
+
           return true;
         });
+
         this.renderChart();
         this.renderChart2();
         this.renderIssueChart();
         this.renderTemperatureChart();
+        generateAlert(
+          this.state.metrics.slice(-1)[0],
+          this.state.babies.birthDate
+        );
       })
       .catch((err) => {
         console.log(err);
         this.setState({ message: "No Data Found" });
       });
+  };
+  getHeightThresholdValues = () => {
+    d3.csv(HeightThreshold).then((data) => {
+      data.map((row) => {
+        this.state.boyHeights.push(Number(row.Boys));
+        this.state.girlHeights.push(Number(row.Girls));
+        return true;
+      });
+    });
+    d3.csv(WeightThreshold).then((data) => {
+      data.map((row) => {
+        this.state.boyWeights.push(Number(row.Boys));
+        this.state.girlWeights.push(Number(row.Girls));
+        return true;
+      });
+    });
   };
   tempreatureChart = React.createRef();
   renderTemperatureChart = () => {
@@ -118,15 +156,23 @@ class babyDetails extends Component {
     if (this.state.received === true) {
       const myChartRef = this.tempreatureChart.current.getContext("2d");
       new Chart(myChartRef, {
-        type: "line",
+        type: "bar",
         data: {
           //Bring in data
-          labels: this.state.dates.sort(),
+          labels: this.state.months,
           datasets: [
             {
               label: "Temperature",
               backgroundColor: "rgba(52, 73, 94,0.4)",
               borderColor: "rgba(52, 73, 94,1)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+                "#3e95cf",
+              ],
               data: this.state.temperature,
             },
           ],
@@ -136,6 +182,34 @@ class babyDetails extends Component {
           maintainAspectRatio: true,
           //Customize chart options
           legend: false,
+          annotation: {
+            annotations: [
+              {
+                type: "line",
+                mode: "horizontal",
+                scaleID: "y-axis-0",
+                value: 37.5,
+                borderColor: "rgb(204, 29, 29)",
+                borderWidth: 4,
+                label: {
+                  enabled: true,
+                  content: "Max",
+                },
+              },
+              {
+                type: "line",
+                mode: "horizontal",
+                scaleID: "y-axis-0",
+                value: 35.5,
+                borderColor: "rgb(204, 29, 29)",
+                borderWidth: 4,
+                label: {
+                  enabled: true,
+                  content: "Min",
+                },
+              },
+            ],
+          },
           scales: {
             yAxes: [
               {
@@ -146,10 +220,9 @@ class babyDetails extends Component {
             ],
             xAxes: [
               {
-                type: "time",
-                time: {
-                  // min: this.state.babies.birthDate,
-                  unit: "month",
+                scaleLabel: {
+                  display: true,
+                  labelString: "Age in months",
                 },
               },
             ],
@@ -161,7 +234,6 @@ class babyDetails extends Component {
   };
   weightChart = React.createRef();
   renderChart = () => {
-    console.log(this.state.babies.birthDate);
     Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
     if (this.state.received === true) {
       const myChartRef = this.weightChart.current.getContext("2d");
@@ -169,13 +241,27 @@ class babyDetails extends Component {
         type: "line",
         data: {
           //Bring in data
-          labels: this.state.dates.sort(),
+          labels: this.state.months,
           datasets: [
             {
               label: "Weight",
               backgroundColor: "rgba(255,153,0,0.4)",
               borderColor: "rgba(255,153,0,1)",
               data: this.state.weights,
+            },
+            {
+              label: "Girl Threshold",
+              backgroundColor: "rgba(255,153,0,0)",
+              borderColor: "rgba(52, 73, 94 ,0.5)",
+              data: this.state.girlWeights,
+              borderDash: [5, 5],
+            },
+            {
+              label: "Boy Threshold",
+              backgroundColor: "rgba(255,153,0,0)",
+              borderColor: "rgba(69, 179, 157,0.5)",
+              data: this.state.boyWeights,
+              borderDash: [5, 5],
             },
           ],
         },
@@ -186,10 +272,17 @@ class babyDetails extends Component {
           scales: {
             xAxes: [
               {
-                type: "time",
-                time: {
-                  // min: this.state.babies.birthDate,
-                  unit: "month",
+                scaleLabel: {
+                  display: true,
+                  labelString: "Age in months",
+                },
+              },
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Weight in grams",
                 },
               },
             ],
@@ -208,8 +301,22 @@ class babyDetails extends Component {
         type: "line",
         data: {
           //Bring in data
-          labels: this.state.dates,
+          labels: this.state.months,
           datasets: [
+            {
+              data: this.state.boyHeights,
+              label: "Boy Threshold",
+              backgroundColor: "rgba(69, 179, 157,0)",
+              borderColor: "rgba(69, 179, 157,0.5)",
+              borderDash: [5, 5],
+            },
+            {
+              data: this.state.girlHeights,
+              label: "Girl Threshold",
+              backgroundColor: "rgba(69, 179, 157,0)",
+              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderDash: [5, 5],
+            },
             {
               label: "Height",
               backgroundColor: "rgba(236, 112, 99,0.4)",
@@ -225,10 +332,17 @@ class babyDetails extends Component {
           scales: {
             xAxes: [
               {
-                type: "time",
-                time: {
-                  // min: this.state.babies.birthDate,
-                  unit: "month",
+                scaleLabel: {
+                  display: true,
+                  labelString: "Age in months",
+                },
+              },
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Height in cm",
                 },
               },
             ],
@@ -292,31 +406,54 @@ class babyDetails extends Component {
     } else {
       return (
         <div className="container">
-          <h1 className="mt-4">Baby Detail</h1>
-          <div className="chart mt-4 p-4 babyDetails">
-            <div class="row">
-              <div class="col detail_title">Registration ID</div>
-              <div class="col">{this.state.babies.regId}</div>
+          <div className="row mt-4">
+            <div className="col">
+              <h1 className="">Baby Detail</h1>
             </div>
-            <div class="row">
-              <div class="col detail_title">Baby Name</div>
-              <div class="col">
-                {this.state.babies.firstName} {this.state.babies.lastName}
+            <div className="col col-lg-2 chart text-right">
+              <h3>Status: Issue</h3>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-md-8">
+              <div className="col-md-12 chart">
+                <div className="col babyDetails">
+                  <div className="row">
+                    <div className="col detail_title">Registration ID</div>
+                    <div className="col">{this.state.babies.regId}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col detail_title">Baby Name</div>
+                    <div className="col">
+                      {this.state.babies.firstName} {this.state.babies.lastName}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col detail_title">Parent Name</div>
+                    <div className="col">{this.state.babies.parentName}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col detail_title">Parent Phone</div>
+                    <div className="col">{this.state.babies.phoneNumber}</div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col detail_title">Date Of Birth</div>
+                    <div className="col">
+                      {new Date(this.state.babies.birthDate).toDateString()}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col detail_title">Parent Name</div>
-              <div class="col">{this.state.babies.parentName}</div>
-            </div>
-            <div class="row">
-              <div class="col detail_title">Parent Phone</div>
-              <div class="col">{this.state.babies.phoneNumber}</div>
-            </div>
-
-            <div class="row">
-              <div class="col detail_title">Date Of Birth</div>
-              <div class="col">
-                {new Date(this.state.babies.birthDate).toDateString()}
+            <div className="col chart">
+              <div className="col-md-12 ">
+                <div className="col-md-12 ">
+                  <h1>Issues</h1>
+                  <p>Underweight</p>
+                  <p>High Temperature</p>
+                  <p>Underweight</p>
+                </div>
               </div>
             </div>
           </div>
@@ -347,17 +484,17 @@ class babyDetails extends Component {
             </h1>
           )}
           <h1>Charts</h1>
-          <div className="row mb-5">
-            <div className="col-md-6">
+          <div className="mb-5">
+            <div className="">
               <div className="col-md-12 chart">
-                <h4 className="chart-heading">Month Against Weight</h4>
+                <h4 className="chart-heading">Baby Age Against Weight</h4>
                 <hr />
                 <canvas id="weightChart" className="" ref={this.weightChart} />
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="col-md-12 chart">
-                <h4 className="chart-heading">Date Scanned Against Height</h4>
+            <div className="mt-4">
+              <div className="chart">
+                <h4 className="chart-heading">Baby Age Against Height</h4>
                 <hr />
                 <canvas id="heightChart" className="" ref={this.heightChart} />
               </div>
@@ -375,7 +512,7 @@ class babyDetails extends Component {
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">
-                  Date Scanned Against Temperature in °C
+                  Baby Age Against Temperature in °C
                 </h4>
                 <hr />
                 <canvas

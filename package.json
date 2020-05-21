@@ -27,7 +27,6 @@
     "mongoose": "^5.9.11",
     "multer": "^1.4.2",
     "nodemon": "^2.0.3",
-    "react-onesignal": "^1.1.15",
     "tesseract.js": "^2.1.1"
   }
 }
