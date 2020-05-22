@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import image from "../../assets/loading.gif";
+import weightIcon from "../../assets/weight icon.png";
+import skinIcon from "../../assets/skin.png";
+import heightIcon from "../../assets/height.png";
+import temperatureIcon from "../../assets/temperature.png";
+
 import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
@@ -410,34 +415,41 @@ class babyDetails extends Component {
             <div className="col">
               <h1 className="">Baby Detail</h1>
             </div>
-            <div className="col col-lg-2 chart text-right">
-              <h3>Status: Issue</h3>
+            <div className="col col-md-3">
+              <div>
+                <h2 className="chart">
+                  Status:{" "}
+                  <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
+                    Critical
+                  </span>
+                </h2>
+              </div>
             </div>
           </div>
           <div className="row mt-4">
             <div className="col-md-8">
               <div className="col-md-12 chart">
                 <div className="col babyDetails">
-                  <div className="row">
+                  <div className="row mt-4">
                     <div className="col detail_title">Registration ID</div>
                     <div className="col">{this.state.babies.regId}</div>
                   </div>
-                  <div className="row">
+                  <div className="row  mt-2">
                     <div className="col detail_title">Baby Name</div>
                     <div className="col">
                       {this.state.babies.firstName} {this.state.babies.lastName}
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row  mt-22">
                     <div className="col detail_title">Parent Name</div>
                     <div className="col">{this.state.babies.parentName}</div>
                   </div>
-                  <div className="row">
+                  <div className="row mt-2">
                     <div className="col detail_title">Parent Phone</div>
                     <div className="col">{this.state.babies.phoneNumber}</div>
                   </div>
 
-                  <div className="row">
+                  <div className="row mt-2 mb-4">
                     <div className="col detail_title">Date Of Birth</div>
                     <div className="col">
                       {new Date(this.state.babies.birthDate).toDateString()}
@@ -449,10 +461,42 @@ class babyDetails extends Component {
             <div className="col chart">
               <div className="col-md-12 ">
                 <div className="col-md-12 ">
-                  <h1>Issues</h1>
-                  <p>Underweight</p>
-                  <p>High Temperature</p>
-                  <p>Underweight</p>
+                  <h3>Issues</h3>
+                  <div className="row mt-1">
+                    <div className="col-sm-2">
+                      <img src={weightIcon} />
+                    </div>
+                    <div className="col-sm-10">
+                      This baby is underweight by 600 grams
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row mt-1">
+                    <div className="col-sm-2">
+                      <img src={skinIcon} />
+                    </div>
+                    <div className="col-sm-10">
+                      Baby has been identified with rash
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row mt-1">
+                    <div className="col-sm-2">
+                      <img src={heightIcon} />
+                    </div>
+                    <div className="col-sm-10">
+                      This baby is underheight by 4cm
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row mt-1">
+                    <div className="col-sm-2">
+                      <img src={temperatureIcon} />
+                    </div>
+                    <div className="col-sm-10">
+                      This baby has a critical temperature of 40°C
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -509,6 +553,7 @@ class babyDetails extends Component {
                 <canvas id="issueChart" className="" ref={this.issueChart} />
               </div>
             </div>
+
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">
