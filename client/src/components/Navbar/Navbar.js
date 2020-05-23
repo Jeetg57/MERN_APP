@@ -97,7 +97,8 @@ class Navbar extends Component {
                   )}
                 {this.state.isAuthenticated === true &&
                   (this.state.job_title === "Admin" ||
-                    this.state.job_title === "Registrant") && (
+                    this.state.job_title === "Registrant" ||
+                    this.state.job_title === "Doctor") && (
                     <li className="nav-item">
                       <Link to="/details/upload" className="nav-link">
                         Baby Details Input
@@ -106,7 +107,8 @@ class Navbar extends Component {
                   )}
                 {this.state.isAuthenticated === true &&
                   (this.state.job_title === "Admin" ||
-                    this.state.job_title === "Registrant") && (
+                    this.state.job_title === "Registrant" ||
+                    this.state.job_title === "Doctor") && (
                     <li className="nav-item">
                       <Link to="/babyRegistration" className="nav-link">
                         Baby Registration
