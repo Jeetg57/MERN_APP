@@ -108,12 +108,20 @@ class Signup extends Component {
               </div>
               <div className="form-group col-md-4">
                 <label>Job Title</label>
-                <input
-                  type="text"
+                <select
+                  id="inputState"
                   name="job_title"
-                  className="form-control"
                   onChange={(e) => this.onChange(e)}
-                ></input>
+                  className="form-control"
+                >
+                  <option value="" defaultValue>
+                    None
+                  </option>
+                  <option value="Administrator">Administrator</option>
+                  <option value="Data Analyst">Data Analyst</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Registrant">Registrant</option>
+                </select>
               </div>
               <div className="form-group col-md-2">
                 <label>Gender</label>

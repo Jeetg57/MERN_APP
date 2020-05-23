@@ -13,7 +13,8 @@ class Navbar extends Component {
     this.state = {
       isAuthenticated: false,
       name: null,
-      id: "",
+      job_title: null,
+      id: null,
       message: null,
     };
     this.logout = this.logout.bind(this);
@@ -36,6 +37,7 @@ class Navbar extends Component {
         .then((response) => {
           this.setState(() => ({
             name: response.data.username,
+            job_title: response.data.job_title,
             id: response.data._id,
           }));
         })
@@ -85,41 +87,41 @@ class Navbar extends Component {
               id="navbar-list-2"
             >
               <ul className="navbar-nav">
-                {this.state.isAuthenticated === true && (
-                  <li className="nav-item">
-                    <Link to="/dashboard" className="nav-link">
-                      Dashboard
-                    </Link>
-                  </li>
-                )}
-                {/* {this.state.isAuthenticated === true && (
-                  <li className="nav-item">
-                    <Link to="/details" className="nav-link">
-                      All Results
-                    </Link>
-                  </li>
-                )} */}
-                {this.state.isAuthenticated === true && (
-                  <li className="nav-item">
-                    <Link to="/details/upload" className="nav-link">
-                      Baby Details Input
-                    </Link>
-                  </li>
-                )}
-                {this.state.isAuthenticated === true && (
-                  <li className="nav-item">
-                    <Link to="/babyRegistration" className="nav-link">
-                      Baby Registration
-                    </Link>
-                  </li>
-                )}
-                {this.state.isAuthenticated === true && (
-                  <li className="nav-item">
-                    <Link to="/ocr" className="nav-link">
-                      OCR
-                    </Link>
-                  </li>
-                )}
+                {this.state.isAuthenticated === true &&
+                  this.state.job_title !== "Registrant" && (
+                    <li className="nav-item">
+                      <Link to="/dashboard" className="nav-link">
+                        Dashboard
+                      </Link>
+                    </li>
+                  )}
+                {this.state.isAuthenticated === true &&
+                  (this.state.job_title === "Admin" ||
+                    this.state.job_title === "Registrant") && (
+                    <li className="nav-item">
+                      <Link to="/details/upload" className="nav-link">
+                        Baby Details Input
+                      </Link>
+                    </li>
+                  )}
+                {this.state.isAuthenticated === true &&
+                  (this.state.job_title === "Admin" ||
+                    this.state.job_title === "Registrant") && (
+                    <li className="nav-item">
+                      <Link to="/babyRegistration" className="nav-link">
+                        Baby Registration
+                      </Link>
+                    </li>
+                  )}
+                {this.state.isAuthenticated === true &&
+                  (this.state.job_title === "Admin" ||
+                    this.state.job_title === "Registrant") && (
+                    <li className="nav-item">
+                      <Link to="/ocr" className="nav-link">
+                        OCR
+                      </Link>
+                    </li>
+                  )}
 
                 {this.state.isAuthenticated === false && (
                   <li className="nav-item">
