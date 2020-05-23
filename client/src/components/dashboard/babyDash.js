@@ -159,7 +159,7 @@ class babyDash extends Component {
       if (item.issue === "Rash") this.state.rash += 1;
       else this.state.noIssues += 1;
     });
-    console.log(this.state.rash);
+
     this.renderIssueChart();
     this.renderLocationChart();
     this.renderHeightChart();
@@ -201,7 +201,7 @@ class babyDash extends Component {
     const kak = arrAvg(this.state.kakamegaWeights);
     const nsa = arrAvg(this.state.naivashaWeights);
     const nak = arrAvg(this.state.nakuruWeights);
-    console.log(kia);
+
     Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
     if (this.state.received === true) {
       const myChartRef = this.weightChart.current.getContext("2d");
@@ -283,7 +283,6 @@ class babyDash extends Component {
     const kak = arrAvg(this.state.kakamegaHeights);
     const nsa = arrAvg(this.state.naivashaHeights);
     const nak = arrAvg(this.state.nakuruHeights);
-    console.log(kia);
     Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
     if (this.state.received === true) {
       const myChartRef = this.stackedHeightChart.current.getContext("2d");
@@ -533,7 +532,7 @@ class babyDash extends Component {
     } else {
       return (
         <div className="container">
-          <h1 className="mt-4"> Welcome Data Analyst</h1>
+          <h1 className="mt-4"> Welcome, {this.state.user.firstname}</h1>
           <div className="row mt-4 mb-5">
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
