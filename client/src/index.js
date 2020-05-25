@@ -5,12 +5,15 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import Navbar from "./components/Navbar/Navbar";
+import ReactSmoothScroll from "react-smooth-scroll";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Navbar />
-      <App />
+      <ReactSmoothScroll>
+        <App />
+      </ReactSmoothScroll>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

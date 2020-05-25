@@ -5,16 +5,15 @@ import weightIcon from "../../assets/weight icon.png";
 import skinIcon from "../../assets/skin.png";
 import heightIcon from "../../assets/height.png";
 import temperatureIcon from "../../assets/temperature.png";
-
+import moment from "moment";
 import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
 import day from "dayjs";
-import generateAlert from "../Alerts/Alert";
 import * as d3 from "d3";
-import HeightThreshold from "../Alerts/height-threshold.csv";
-import WeightThreshold from "../Alerts/weight-threshold.csv";
+import HeightThreshold from "../../assets/height-threshold.csv";
+import WeightThreshold from "../../assets/weight-threshold.csv";
 import "chartjs-plugin-annotation";
 class babyDetails extends Component {
   constructor() {
@@ -33,8 +32,13 @@ class babyDetails extends Component {
       boyWeights: [],
       girlWeights: [],
       temperature: [],
+      authorized: false,
       rash: 0,
+      status: null,
       noIssues: 0,
+      currentAlert: null,
+      alerts: [],
+      alertWeight: null,
       message: "",
     };
     this.getHeightThresholdValues = this.getHeightThresholdValues.bind(this);
@@ -96,49 +100,75 @@ class babyDetails extends Component {
     const {
       match: { params },
     } = this.props;
+    const id = localStorage.getItem("id");
     await axios
-      .get(`/babyReg/${params.id}`, {
+      .get(`/users/others/${id}`, {
         headers: { "auth-token": localStorage.getItem("auth-token") },
       })
       .then((response) => {
-        this.setState({ babies: response.data });
-        this.setState({ metrics: response.data.metrics });
-        this.setState({ received: true });
-        this.state.metrics.map((item) => {
-          var d = new Date(this.state.babies.birthDate);
-          var scanDate = new Date(item.date);
-          const diffTime = Math.abs(scanDate - d);
-          const diffMonths = Math.ceil(diffTime / 2592000000);
-          if (!this.state.months.includes(diffMonths)) {
-            this.state.weights.push(item.weight);
-            this.state.months.push(diffMonths);
-            this.state.dates.push(item.date);
-            this.state.heights.push(item.height);
-            if (item.issue === "Rash") {
-              this.state.rash += 1;
-            } else {
-              this.state.noIssues += 1;
-            }
-            this.state.temperature.push(item.temperature);
-          }
-
-          return true;
-        });
-
-        this.renderChart();
-        this.renderChart2();
-        this.renderIssueChart();
-        this.renderTemperatureChart();
-        generateAlert(
-          this.state.metrics.slice(-1)[0],
-          this.state.babies.birthDate
-        );
+        if (
+          response.data.job_title === "Doctor" ||
+          response.data.job_title === "Admin"
+        ) {
+          axios
+            .get(`/babyReg/${params.id}`, {
+              headers: { "auth-token": localStorage.getItem("auth-token") },
+            })
+            .then((response) => {
+              this.setState({ babies: response.data });
+              this.setState({ metrics: response.data.metrics });
+              this.state.metrics.map((item) => {
+                var d = moment(this.state.babies.birthDate);
+                var scanDate = moment(item.date);
+                const diffMonths = Math.round(scanDate.diff(d, "months", true));
+                if (!this.state.months.includes(diffMonths)) {
+                  this.state.weights.push(item.weight);
+                  this.state.months.push(diffMonths);
+                  this.state.dates.push(item.date);
+                  this.state.heights.push(item.height);
+                  if (item.issue === "Rash") {
+                    this.state.rash += 1;
+                  } else {
+                    this.state.noIssues += 1;
+                  }
+                  this.state.temperature.push(item.temperature);
+                }
+                return true;
+              });
+              axios
+                .get(`/babyReg/alerts/${this.state.babies.regId}`, {
+                  headers: { "auth-token": localStorage.getItem("auth-token") },
+                })
+                .then((response) => {
+                  this.setState({
+                    alerts: response.data[0].alerts[0],
+                    currentAlert:
+                      response.data[0].alerts[
+                        response.data[0].alerts.length - 1
+                      ],
+                  });
+                  this.setState({ authorized: true, received: true });
+                  this.renderChart();
+                  this.renderChart2();
+                  this.renderIssueChart();
+                  this.renderTemperatureChart();
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+              this.setState({ message: "No Data Found" });
+            });
+        }
       })
+
       .catch((err) => {
-        console.log(err);
-        this.setState({ message: "No Data Found" });
+        this.setState(() => ({ message: err.response.data }));
       });
   };
+
   getHeightThresholdValues = () => {
     d3.csv(HeightThreshold).then((data) => {
       data.map((row) => {
@@ -168,7 +198,7 @@ class babyDetails extends Component {
           datasets: [
             {
               label: "Temperature",
-              backgroundColor: "rgba(52, 73, 94,0.4)",
+
               borderColor: "rgba(52, 73, 94,1)",
               backgroundColor: [
                 "#3e95cd",
@@ -247,6 +277,7 @@ class babyDetails extends Component {
         data: {
           //Bring in data
           labels: this.state.months,
+
           datasets: [
             {
               label: "Weight",
@@ -258,14 +289,14 @@ class babyDetails extends Component {
               label: "Girl Threshold",
               backgroundColor: "rgba(255,153,0,0)",
               borderColor: "rgba(52, 73, 94 ,0.5)",
-              data: this.state.girlWeights,
+              data: this.state.girlWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
             {
               label: "Boy Threshold",
               backgroundColor: "rgba(255,153,0,0)",
               borderColor: "rgba(69, 179, 157,0.5)",
-              data: this.state.boyWeights,
+              data: this.state.boyWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
           ],
@@ -309,14 +340,14 @@ class babyDetails extends Component {
           labels: this.state.months,
           datasets: [
             {
-              data: this.state.boyHeights,
+              data: this.state.boyHeights.slice(this.state.months[0]),
               label: "Boy Threshold",
               backgroundColor: "rgba(69, 179, 157,0)",
               borderColor: "rgba(69, 179, 157,0.5)",
               borderDash: [5, 5],
             },
             {
-              data: this.state.girlHeights,
+              data: this.state.girlHeights.slice(this.state.months[0]),
               label: "Girl Threshold",
               backgroundColor: "rgba(69, 179, 157,0)",
               borderColor: "rgba(52, 73, 94 ,0.5)",
@@ -391,14 +422,7 @@ class babyDetails extends Component {
       movableRows: true,
       movableColumns: true,
     };
-    if (this.state.message.length > 0) {
-      return (
-        <div className="container mt-5">
-          <h1 className="four0four">404</h1>
-          <h2>Error, No data found for this ID!</h2>
-        </div>
-      );
-    } else if (this.state.received === false) {
+    if (this.state.received === false) {
       return (
         <div className="container mt-3">
           <div>
@@ -408,27 +432,38 @@ class babyDetails extends Component {
           </div>
         </div>
       );
+    } else if (this.state.authorized === false) {
+      return (
+        <div>
+          <h1>You are not authorized to view these details</h1>
+        </div>
+      );
+    } else if (this.state.message.length > 0) {
+      return (
+        <div className="container mt-5">
+          <h1 className="four0four">404</h1>
+          <h2>Error, No data found for this ID!</h2>
+        </div>
+      );
     } else {
       return (
         <div className="container">
-          <div className="row mt-4">
-            <div className="col">
+          <div className="d-flex flex-row justify-content-between mt-3">
+            <div className="p-2">
               <h1 className="">Baby Detail</h1>
             </div>
-            <div className="col col-md-3">
-              <div>
-                <h2 className="chart">
-                  Status:{" "}
-                  <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
-                    Critical
-                  </span>
-                </h2>
-              </div>
+            <div className="p-2">
+              <h2 className="badge-pill badge-light p-2">
+                Status:{" "}
+                <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
+                  Critical
+                </span>
+              </h2>
             </div>
           </div>
-          <div className="row mt-4">
-            <div className="col-md-8">
-              <div className="col-md-12 chart">
+          <div className="row mt-2">
+            <div className="col-md-7">
+              <div className="col-md-12 boxes">
                 <div className="col babyDetails">
                   <div className="row mt-4">
                     <div className="col detail_title">Registration ID</div>
@@ -440,7 +475,11 @@ class babyDetails extends Component {
                       {this.state.babies.firstName} {this.state.babies.lastName}
                     </div>
                   </div>
-                  <div className="row  mt-22">
+                  <div className="row mt-2">
+                    <div className="col detail_title">Baby Gender</div>
+                    <div className="col">{this.state.babies.gender}</div>
+                  </div>
+                  <div className="row  mt-2">
                     <div className="col detail_title">Parent Name</div>
                     <div className="col">{this.state.babies.parentName}</div>
                   </div>
@@ -458,45 +497,95 @@ class babyDetails extends Component {
                 </div>
               </div>
             </div>
-            <div className="col chart">
+            <div className="col boxes">
               <div className="col-md-12 ">
                 <div className="col-md-12 ">
-                  <h3>Issues</h3>
-                  <div className="row mt-1">
-                    <div className="col-sm-2">
-                      <img src={weightIcon} />
-                    </div>
-                    <div className="col-sm-10">
-                      This baby is underweight by 600 grams
-                    </div>
+                  <div className="pt-2">
+                    <span style={{ fontWeight: "bold", fontSize: "24px" }}>
+                      Issues ᛫
+                    </span>{" "}
+                    <span
+                      className="text-muted pl-1"
+                      style={{ fontSize: "20px" }}
+                    >
+                      As of{" "}
+                      {moment(this.state.currentAlert.date).format(
+                        "dddd Do MMMM, YYYY"
+                      )}
+                    </span>
                   </div>
-                  <hr />
-                  <div className="row mt-1">
-                    <div className="col-sm-2">
-                      <img src={skinIcon} />
-                    </div>
-                    <div className="col-sm-10">
-                      Baby has been identified with rash
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row mt-1">
-                    <div className="col-sm-2">
-                      <img src={heightIcon} />
-                    </div>
-                    <div className="col-sm-10">
-                      This baby is underheight by 4cm
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row mt-1">
-                    <div className="col-sm-2">
-                      <img src={temperatureIcon} />
-                    </div>
-                    <div className="col-sm-10">
-                      This baby has a critical temperature of 40°C
-                    </div>
-                  </div>
+
+                  {this.state.currentAlert.weight !== undefined &&
+                    this.state.currentAlert.weight !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={weightIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.weight}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  {this.state.currentAlert.issue !== undefined &&
+                    this.state.currentAlert.issue !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={skinIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.issue}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  {this.state.currentAlert.height !== undefined &&
+                    this.state.currentAlert.height !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={heightIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.height}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  {this.state.currentAlert.temperature !== undefined &&
+                    this.state.currentAlert.temperature !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={temperatureIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.temperature}
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    )}
+                  {this.state.currentAlert.normal !== undefined &&
+                    this.state.currentAlert.normal !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={skinIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.normal}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>

@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import babyImg from "./assets/homepage-baby.png";
 import arduino from "./assets/arduino.jpg";
 import { FaReact } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+
+// ..
 
 class Home extends Component {
   render() {
+    // var scroll = new SmoothScroll();
+    // var anchor = document.querySelector("#section_one");
+    // var options = { speed: 1000, easing: "easeOutCubic" };
+    // scroll.animateScroll(anchor, toggle, options);
     return (
       <div className="homepage">
         <div className="row">
@@ -16,15 +24,22 @@ class Home extends Component {
             <a href="/login" className="btn btn-outline-info">
               Login/Register
             </a>
+            <br />
+            <AnchorLink
+              href="#section_one"
+              style={{ color: "black" }}
+              className="horizontal-center bounce"
+            >
+              <FaChevronDown style={{ fontSize: "40px" }} className="mt-5" />
+            </AnchorLink>
           </div>
           <div className="col">
             <img src={babyImg} className="w-100" alt="Baby kissed"></img>
           </div>
         </div>
-        <div className="section-one">
+        <div className="section-one" id="section_one">
           <h1 className="text-center">What we do</h1>
-
-          <div className="row">
+          <div className="row mt-4">
             <div className="col">
               <img className="w-100" src={arduino} alt="Arduino"></img>
             </div>

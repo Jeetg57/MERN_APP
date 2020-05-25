@@ -17,6 +17,7 @@ class babyRegistration extends Component {
       phoneNumber: 0,
       birthDate: null,
       message: "",
+      gender: "",
       sending: false,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -31,6 +32,7 @@ class babyRegistration extends Component {
       lastName: this.state.lastName,
       parentName: this.state.parentName,
       phoneNumber: this.state.phoneNumber,
+      gender: this.state.gender,
       date: this.state.birthDate,
     };
     const config = {
@@ -87,6 +89,33 @@ class babyRegistration extends Component {
             </div>
             <div className="row">
               <div className="form-group col-md-6">
+                <label>Baby Gender</label>
+                <select
+                  id="inputState"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                  name="gender"
+                >
+                  <option defaultValue>None</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div className="form-group col-md-6">
+                <label>Date of birth</label>
+                <input
+                  id="date"
+                  name="birthDate"
+                  placeholder="date"
+                  type="date"
+                  required="required"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-6">
                 <label>Parent Name</label>
                 <input
                   id="parentName"
@@ -110,18 +139,6 @@ class babyRegistration extends Component {
                   onChange={(e) => this.onChange(e)}
                 />
               </div>
-            </div>
-            <div className="form-group col-md-5 p-0">
-              <label>Date of birth</label>
-              <input
-                id="date"
-                name="birthDate"
-                placeholder="date"
-                type="date"
-                required="required"
-                className="form-control"
-                onChange={(e) => this.onChange(e)}
-              />
             </div>
 
             <div className="">

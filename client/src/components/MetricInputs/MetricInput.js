@@ -72,80 +72,85 @@ class MetricInput extends Component {
         <div className="login-form">
           <h1 className="text-center mt-5">Input Baby Details Here</h1>
           <form onSubmit={this.onFormSubmit}>
-            <div className="form-group">
+            <div className="form-group ">
               <label>Registration ID</label>
               <input
                 id="regID"
                 name="regID"
                 placeholder="eg. 12121221"
-                type="text"
+                type="number"
                 required="required"
                 className="form-control"
                 onChange={(e) => this.onChange(e)}
               />
             </div>
-            <div className="form-group">
-              <label>Baby Height</label>
-              <input
-                id="height"
-                name="height"
-                placeholder="Height in centimeters"
-                type="text"
-                className="form-control"
-                required="required"
-                onChange={(e) => this.onChange(e)}
-              />
+            <div className="row">
+              <div className="form-group col">
+                <label>Baby Height</label>
+                <input
+                  id="height"
+                  name="height"
+                  placeholder="Height in centimeters"
+                  type="number"
+                  className="form-control"
+                  required="required"
+                  onChange={(e) => this.onChange(e)}
+                />
+              </div>
+              <div className="form-group col">
+                <label>Baby Weight</label>
+                <input
+                  id="weight"
+                  name="weight"
+                  placeholder="Weight in grams"
+                  type="number"
+                  className="form-control"
+                  required="required"
+                  onChange={(e) => this.onChange(e)}
+                />
+              </div>
+              <div className="form-group col">
+                <label>Baby Temperature</label>
+                <input
+                  id="temperature"
+                  name="temperature"
+                  placeholder="Temperature in degree celcius"
+                  type="number"
+                  className="form-control"
+                  required="required"
+                  onChange={(e) => this.onChange(e)}
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Baby Weight</label>
-              <input
-                id="weight"
-                name="weight"
-                placeholder="Weight in grams"
-                type="text"
-                className="form-control"
-                required="required"
-                onChange={(e) => this.onChange(e)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Baby Temperature</label>
-              <input
-                id="temperature"
-                name="temperature"
-                placeholder="Temperature in degree celcius"
-                type="text"
-                className="form-control"
-                required="required"
-                onChange={(e) => this.onChange(e)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Input Image</label>
-              <input
-                type="file"
-                name="file"
-                placeholder="Picture of the baby"
-                className="form-control p-1"
-                onChange={(e) => this.onFileChange(e)}
-              />
-            </div>
-            <div className="form-group">
-              <label>State</label>
-              <select
-                id="inputState"
-                className="form-control"
-                onChange={(e) => this.onChange(e)}
-                name="location"
-              >
-                <option defaultValue>None</option>
-                <option value="Nairobi">Nairobi</option>
-                <option value="Naivasha">Naivasha</option>
-                <option value="Kiambu">Kiambu</option>
-                <option value="Nakuru">Nakuru</option>
-                <option value="Kisumu">Kisumu</option>
-                <option value="Kakamega">Kakamega</option>
-              </select>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>Input Image</label>
+                <input
+                  type="file"
+                  name="file"
+                  placeholder="Picture of the baby"
+                  className="form-control p-1"
+                  onChange={(e) => this.onFileChange(e)}
+                />
+              </div>
+              <div className="form-group col">
+                <label>State</label>
+                <select
+                  id="inputState"
+                  className="form-control"
+                  onChange={(e) => this.onChange(e)}
+                  name="location"
+                >
+                  <option defaultValue>None</option>
+                  <option value="Nairobi">Nairobi</option>
+                  <option value="Naivasha">Naivasha</option>
+                  <option value="Kiambu">Kiambu</option>
+                  <option value="Nakuru">Nakuru</option>
+                  <option value="Kisumu">Kisumu</option>
+                  <option value="Kakamega">Kakamega</option>
+                </select>
+              </div>
             </div>
             <div className="">
               <div className="form-group">

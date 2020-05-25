@@ -67,6 +67,11 @@ class babyDash extends Component {
           headerFilter: "input",
         },
         {
+          title: "Gender",
+          field: "gender",
+          headerFilter: "input",
+        },
+        {
           title: "Parent Name",
           field: "parentName",
           headerFilter: "input",
@@ -117,7 +122,9 @@ class babyDash extends Component {
     this.state.babies.map((baby) => {
       baby.metrics.map((metric) => {
         this.state.allMetrics.push(metric);
+        return true;
       });
+      return true;
     });
     this.getGraphData();
   }
@@ -127,37 +134,38 @@ class babyDash extends Component {
       // this.state.dates.push(item.date);
       // this.state.heights.push(item.height);
       if (item.location === "Nairobi") {
-        this.state.nairobi += 1;
+        this.setState({ nairobi: this.state.nairobi + 1 });
         this.state.nairobiHeights.push(item.height);
         this.state.nairobiWeights.push(item.weight);
       }
       if (item.location === "Naivasha") {
-        this.state.naivasha += 1;
+        this.setState({ naivasha: this.state.naivasha + 1 });
         this.state.naivashaHeights.push(item.height);
         this.state.naivashaWeights.push(item.weight);
       }
       if (item.location === "Kiambu") {
-        this.state.kiambu += 1;
+        this.setState({ kiambu: this.state.kiambu + 1 });
         this.state.kiambuHeights.push(item.height);
         this.state.kiambuWeights.push(item.weight);
       }
       if (item.location === "Nakuru") {
-        this.state.nakuru += 1;
+        this.setState({ nakuru: this.state.nakuru + 1 });
         this.state.nakuruHeights.push(item.height);
         this.state.nakuruWeights.push(item.weight);
       }
       if (item.location === "Kisumu") {
-        this.state.kisumu += 1;
+        this.setState({ kisumu: this.state.kisumu + 1 });
         this.state.kisumuHeights.push(item.height);
         this.state.kisumuWeights.push(item.weight);
       }
       if (item.location === "Kakamega") {
-        this.state.kakamega += 1;
+        this.setState({ kakamega: this.state.kakamega + 1 });
         this.state.kakamegaHeights.push(item.height);
         this.state.kakamegaWeights.push(item.weight);
       }
-      if (item.issue === "Rash") this.state.rash += 1;
-      else this.state.noIssues += 1;
+      if (item.issue === "Rash") this.setState({ rash: this.state.rash + 1 });
+      else this.setState({ noIssues: this.state.noIssues + 1 });
+      return true;
     });
 
     this.renderIssueChart();

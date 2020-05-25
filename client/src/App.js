@@ -16,6 +16,7 @@ import babyDash from "./components/dashboard/babyDash";
 import babyDetails from "./components/BabyInfo/babyDetails";
 import successRegistered from "./components/BabyInfo/successRegistered";
 import babyPictures from "./components/BabyInfo/babyPictures";
+import registerSuccess from "./components/auth/registerSuccess";
 function App() {
   return (
     <main>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/dashboard" exact component={babyDash} />
         <Route path="/ocr" exact component={OCR} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/signup/success" exact component={registerSuccess} />
         <Route path="/login" exact component={Login} />
         <Route path="/details" exact component={AllResults} />
         <Route path="/details/upload" exact component={MetricInput} />

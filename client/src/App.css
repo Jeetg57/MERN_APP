@@ -1,194 +1,287 @@
-  @import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-  .photoImg {
-    object-fit: cover;
-    min-height: 350px;
-    max-height: 350px;
-    width: 350px;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+.photoImg {
+  object-fit: cover;
+  min-height: 350px;
+  max-height: 350px;
+  width: 350px;
+}
 
-  .card {
-    max-width: 350px;
-    margin: 10px;
-  }
+.card {
+  max-width: 350px;
+  margin: 10px;
+}
 
-  .login-form {
-    margin: 30px;
-    padding: 30px;
-    box-shadow: 0 0 15px 0 rgba(191, 191, 191, 1);
-    border-radius: 10px;
-  }
+.login-form {
+  margin: 30px;
+  padding: 30px;
+  box-shadow: 0 0 15px 0 rgba(191, 191, 191, 1);
+  border-radius: 10px;
+}
 
-  .bar {
-    padding: 10px;
-    margin: 10px;
-    color: #ba3939;
-    background: #ffe0e0;
-    border: 1px solid #a33a3a;
-  }
+.bar {
+  padding: 10px;
+  margin: 10px;
+  color: #ba3939;
+  background: #ffe0e0;
+  border: 1px solid #a33a3a;
+}
 
-  .chart {
-    box-shadow: 0 0 15px 0 rgba(191, 191, 191, 1);
-    border-radius: 10px;
-    padding: 10px;
-  }
+.chart {
+  box-shadow: 0 0 15px 0 rgba(191, 191, 191, 1);
+  border-radius: 10px;
+  padding: 10px;
+}
 
-  .db-name {
-    color: #34495e;
-    font-family: "Jost", sans-serif;
-  }
+.db-name {
+  color: #34495e;
+  font-family: "Jost", sans-serif;
+}
 
-  .chart-heading {
-    color: #34495e;
-    font-family: "Jost", sans-serif;
-  }
+.chart-heading {
+  color: #34495e;
+  font-family: "Jost", sans-serif;
+}
 
-  .custom-tbl {
-    box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-    -o-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-    -ms-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-  }
+.custom-tbl {
+  box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
 
-  .custom-tbl>thead {
-    box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-    -o-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-    -ms-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-    color: #fa4251;
-    border-radius: 10px;
-    font-family: 'Lato', sans-serif;
-    text-align: center;
-    font-size: 1.3em;
-    overflow: hidden;
-  }
+.custom-tbl > thead {
+  box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
+  color: #fa4251;
+  border-radius: 10px;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+  font-size: 1.3em;
+  overflow: hidden;
+}
 
-  .custom-tbl>tbody {
-    font-weight: bold;
-    vertical-align: middle;
-  }
+.custom-tbl > tbody {
+  font-weight: bold;
+  vertical-align: middle;
+}
 
-  .custom-tbl>tbody>tr {
-    border-bottom: #fa4251 2px solid;
-  }
+.custom-tbl > tbody > tr {
+  border-bottom: #fa4251 2px solid;
+}
 
-  .four0four {
-    font-size: 16em;
-  }
+.four0four {
+  font-size: 16em;
+}
 
-  .four0four-details {
-    font-size: 1.2em;
-  }
+.four0four-details {
+  font-size: 1.2em;
+}
 
+.my-container {
+  margin: 0 25% 100px;
+  line-height: 180%;
+  font-size: 1.3em;
+  color: #000;
+  text-align: justify;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-font-smoothing: antialiased !important;
+  text-rendering: optimizelegibility !important;
+  letter-spacing: 0.03em;
+}
+
+.header .heading-text {
+  font-size: 3em;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+}
+
+.my-container > h1 {
+  text-decoration: underline;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.homepage {
+  overflow: hidden;
+  margin: auto;
+}
+
+.text-content {
+  margin: auto;
+  width: 50%;
+}
+
+.text-content .head {
+  font-size: 28px;
+  padding-left: 40px;
+  text-decoration: underline;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.text-content .head2 {
+  font-size: 64px;
+  padding-left: 40px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.text-content > a {
+  margin-left: 40px;
+  font-size: 26px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.section-one {
+  padding: 20px 10%;
+}
+
+.section-one > h1 {
+  font-size: 60px;
+  text-decoration: underline;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.text-content > h2 {
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+}
+
+footer {
+  padding: 50px;
+  background-color: #17202a;
+  color: white;
+}
+
+.babyDetails > .row > .col {
+  font-family: "Jost", sans-serif;
+  font-size: 30px;
+}
+
+.babyDetails > .row > .detail_title {
+  font-size: 30px;
+  color: #34495e;
+  font-weight: bold;
+}
+
+.boxes {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+    0 16px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fbfcfc;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.horizontal-center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.bounce {
+  -moz-animation: bounce 3s infinite;
+  -webkit-animation: bounce 3s infinite;
+  animation: bounce 3s infinite;
+}
+@-moz-keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@media (max-width: 800px) {
   .my-container {
-    margin: 0 25% 100px;
-    line-height: 180%;
-    font-size: 1.3em;
-    color: #000;
-    text-align: justify;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased !important;
-    -moz-font-smoothing: antialiased !important;
-    text-rendering: optimizelegibility !important;
-    letter-spacing: .03em;
-  }
-
-  .header .heading-text {
-    font-size: 3em;
-    text-transform: uppercase;
-    font-family: 'Lato', sans-serif;
-  }
-
-  .my-container>h1 {
-    text-decoration: underline;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  }
-
-  .homepage {
-    overflow: hidden;
     margin: auto;
   }
-
-  .text-content {
-    margin: auto;
-    width: 50%;
-  }
-
   .text-content .head {
-    font-size: 28px;
-    padding-left: 40px;
-    text-decoration: underline;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
   }
-
   .text-content .head2 {
-    font-size: 64px;
-    padding-left: 40px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
   }
-
-  .text-content>a {
-    margin-left: 40px;
-    font-size: 26px;
-    font-family: 'Montserrat', sans-serif;
+  .section-one > h1 {
+    font-size: 20px;
   }
-
-  .section-one {
-    padding: 20px 10%;
+  .section-one > h2 {
+    font-size: 16px;
   }
-
-  .section-one>h1 {
-    font-size: 60px;
-    text-decoration: underline;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  .text-content > a {
+    font-size: 16px;
   }
-
-  .text-content>h2 {
-    font-size: 30px;
-    font-family: 'Montserrat', sans-serif;
+  .text-content > h2 {
+    font-size: 16px;
   }
-
-  footer {
-    padding: 50px;
-    background-color: #17202A;
-    color: white;
-  }
-
-  .babyDetails>.row>.col {
-    font-family: "Jost", sans-serif;
-    font-size: 30px;
-  }
-
-  .babyDetails>.row>.detail_title {
-    font-size: 30px;
-    color: #34495e;
-    font-weight: bold;
-  }
-
-  @media(max-width: 800px) {
-    .my-container {
-      margin: auto;
-    }
-    .text-content .head {
-      font-size: 20px;
-    }
-    .text-content .head2 {
-      font-size: 18px;
-    }
-    .section-one>h1 {
-      font-size: 20px;
-    }
-    .section-one>h2 {
-      font-size: 16px;
-    }
-    .text-content>a {
-      font-size: 16px
-    }
-    .text-content>h2 {
-      font-size: 16px
-    }
-  }
+}

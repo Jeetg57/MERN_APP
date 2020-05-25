@@ -31,7 +31,7 @@ class Navbar extends Component {
   getUser = async () => {
     if (this.state.isAuthenticated === true) {
       const id = localStorage.getItem("id");
-      Axios.get(`/users/${id}`, {
+      Axios.get(`/users/others/${id}`, {
         headers: { "auth-token": localStorage.getItem("auth-token") },
       })
         .then((response) => {
@@ -63,7 +63,7 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-dark bg-dark navbar-expand-sm myNavbar">
+        <nav className="navbar navbar-dark bg-dark navbar-expand-md myNavbar">
           <div className="container">
             <a href="/" className="navbar-brand">
               <AiFillHome
