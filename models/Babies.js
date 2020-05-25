@@ -12,6 +12,10 @@ const Babies = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    required: true,
+  },
   parentName: {
     type: String,
     required: true,
@@ -25,6 +29,9 @@ const Babies = new mongoose.Schema({
     required: true,
   },
   metrics: {
+    type: Array,
+  },
+  alerts: {
     type: Array,
   },
 });

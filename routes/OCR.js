@@ -32,7 +32,6 @@ router.post(
       const worker = createWorker({
         logger: (m) => console.log(m),
       });
-
       (async () => {
         await worker.load();
         await worker.loadLanguage("eng");

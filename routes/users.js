@@ -3,10 +3,22 @@ const router = express.Router();
 const User = require("../models/User");
 const verify = require("../verifyToken");
 
+router.get("/others/:id", verify, async (req, res) => {
+  try {
+    const result = await User.findById(req.params.id).select({
+      username: 1,
+      job_title: 1,
+      _id: 1,
+    });
+    res.json(result);
+  } catch (err) {
+    res.json({ message: error });
+  }
+});
 //*Works well
 router.get("/:id", verify, async (req, res) => {
   try {
-    const result = await User.findById(req.params.id);
+    const result = await User.findById(req.params.id).select({ password: 0 });
     res.json(result);
   } catch (err) {
     res.json({ message: error });

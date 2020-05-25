@@ -22,16 +22,35 @@ router.get("/:id", verify, async (req, res) => {
     res.json({ message: err });
   }
 });
+router.get("/alerts/:regId", verify, async (req, res) => {
+  try {
+    const alertData = await Babies.find({
+      regId: req.params.regId,
+    }).select({ alerts: 1 });
+    res.send(alertData);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 router.post("/", verify, async (req, res) => {
   const baby = new Babies({
     regId: Math.floor(Math.random() * 90000) + 10000,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
+    gender: req.body.gender,
     parentName: req.body.parentName,
     phoneNumber: req.body.phoneNumber,
     birthDate: new Date(req.body.date),
     metrics: [],
+    alerts: [
+      {
+        height: "Initial",
+        weight: "Initial",
+        issue: "Initial",
+        temperature: "Initial",
+      },
+    ],
   });
   try {
     const savedResult = await baby.save();
