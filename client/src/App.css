@@ -54,29 +54,6 @@
   border-radius: 10px;
 }
 
-.custom-tbl > thead {
-  box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.15);
-  color: #fa4251;
-  border-radius: 10px;
-  font-family: "Lato", sans-serif;
-  text-align: center;
-  font-size: 1.3em;
-  overflow: hidden;
-}
-
-.custom-tbl > tbody {
-  font-weight: bold;
-  vertical-align: middle;
-}
-
-.custom-tbl > tbody > tr {
-  border-bottom: #fa4251 2px solid;
-}
-
 .four0four {
   font-size: 16em;
 }
@@ -101,7 +78,7 @@
 .header .heading-text {
   font-size: 3em;
   text-transform: uppercase;
-  font-family: "Lato", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .my-container > h1 {

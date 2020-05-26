@@ -1,24 +1,23 @@
-import React, { Component } from "react";
 import axios from "axios";
-import image from "../../assets/loading.gif";
-import weightIcon from "../../assets/weight icon.png";
-import skinIcon from "../../assets/skin.png";
-import heightIcon from "../../assets/height.png";
-import temperatureIcon from "../../assets/temperature.png";
-import successIcon from "../../assets/success.png";
-import { FaRegImages } from "react-icons/fa";
-import { AiOutlineLineChart } from "react-icons/ai";
-import AnchorLink from "react-anchor-link-smooth-scroll";
-import moment from "moment";
-import "react-tabulator/lib/styles.css"; // default theme
-import "react-tabulator/css/bulma/tabulator_bulma.min.css";
-import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
-import day from "dayjs";
-import * as d3 from "d3";
-import thresholds from "../../assets/height-weight-threshold.csv";
-
 import "chartjs-plugin-annotation";
+import * as d3 from "d3";
+import moment from "moment";
+import React, { Component } from "react";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import { AiOutlineLineChart } from "react-icons/ai";
+import { FaRegImages } from "react-icons/fa";
+import { ReactTabulator } from "react-tabulator";
+import "react-tabulator/css/bulma/tabulator_bulma.min.css";
+import "react-tabulator/lib/styles.css"; // default theme
+import thresholds from "../../assets/height-weight-threshold.csv";
+import heightIcon from "../../assets/height.png";
+import image from "../../assets/loading.gif";
+import skinIcon from "../../assets/skin.png";
+import successIcon from "../../assets/success.png";
+import temperatureIcon from "../../assets/temperature.png";
+import weightIcon from "../../assets/weight icon.png";
+
 class babyDetails extends Component {
   constructor() {
     super();
@@ -55,7 +54,7 @@ class babyDetails extends Component {
     var value = cell.getValue();
 
     if (value) {
-      value = day(value).format("ddd DD MMM YYYY");
+      value = moment(value).format("ddd DD MMM YYYY");
     }
 
     return value;

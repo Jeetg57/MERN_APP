@@ -98,17 +98,17 @@ class Home extends Component {
             data-aos-easing="ease-in-out"
             anchorPlacement="top-bottom"
           >
+            <div className="col text-section text-content">
+              <h2>
+                Use our data, analyze it further and give more meaning to it
+              </h2>
+            </div>
             <div className="col">
               <img
                 className="w-100"
                 src="https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?cs=srgb&dl=person-holding-blue-ballpoint-pen-on-white-notebook-669610.jpg&fm=jpg"
                 alt="Arduino"
               ></img>
-            </div>
-            <div className="col text-section text-content">
-              <h2>
-                Use our data, analyze it further and give more meaning to it
-              </h2>
             </div>
           </div>
 
