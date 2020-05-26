@@ -1,27 +1,26 @@
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  background-color: #abb2b9;
+  background-color: #ffffff;
 }
 
 ::-webkit-scrollbar {
   height: 9px;
-  width: 7px;
+  width: 9px;
   background-color: #fcfcfc;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #17202a;
 }
 ::-webkit-scrollbar-thumb:horizontal {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #9c9c9c;
 }
 ::-webkit-scrollbar-track:horizontal {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #fffefe;
 }
