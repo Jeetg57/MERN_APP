@@ -56,7 +56,6 @@ class MetricInput extends Component {
         this.setState(() => ({ sending: false }));
         this.setState(() => ({ message: error.response.data }));
       });
-    e.target.reset();
   };
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -67,11 +66,11 @@ class MetricInput extends Component {
   }
   render() {
     return (
-      <div className="container">
+      <div className="container vertical-center">
         {this.state.sending === null}
-        <div className="login-form">
-          <h1 className="text-center mt-5">Input Baby Details Here</h1>
-          <form onSubmit={this.onFormSubmit}>
+        <div className="boxes">
+          <h1 className="text-center mt-2">Input Baby Details Here</h1>
+          <form onSubmit={this.onFormSubmit} className="p-4">
             <div className="form-group ">
               <label>Registration ID</label>
               <input
@@ -153,13 +152,20 @@ class MetricInput extends Component {
               </div>
             </div>
             <div className="">
-              <div className="form-group">
+              <div className="form-group text-right">
                 <button
                   name="submit"
                   type="submit"
                   className="btn btn-outline-primary"
                 >
                   Submit
+                </button>
+                <button
+                  name="reset"
+                  type="reset"
+                  className="btn btn-light ml-3"
+                >
+                  Reset
                 </button>
                 {this.state.sending === true && (
                   <div>

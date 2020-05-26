@@ -57,10 +57,10 @@ class babyRegistration extends Component {
   }
   render() {
     return (
-      <div className="container">
-        <div className="login-form">
-          <h1 className="text-center mt-5">Baby Registration</h1>
-          <form onSubmit={this.onFormSubmit}>
+      <div className="container vertical-center">
+        <div className="boxes">
+          <h1 className="text-center mt-2">Baby Registration</h1>
+          <form onSubmit={this.onFormSubmit} className="p-4">
             <div className="row">
               <div className="form-group col-md-6">
                 <label>First Name</label>
@@ -141,7 +141,7 @@ class babyRegistration extends Component {
               </div>
             </div>
 
-            <div className="">
+            <div className="text-right">
               <div className="form-group">
                 <button
                   name="submit"

@@ -99,7 +99,7 @@ router.post("/", upload.single("file"), async (req, res, next) => {
             var jsonResult = [];
 
             fs.createReadStream(
-              path.resolve(__dirname, "../", "assets", "HEIGHT_WEIGHT.csv")
+              path.resolve(__dirname, "../", "assets", "HEIGHT_WEIGHT2.csv")
             )
               .pipe(csv.parse({ headers: true }))
               .on("error", (error) => console.error(error))
@@ -118,15 +118,44 @@ router.post("/", upload.single("file"), async (req, res, next) => {
                 if (metric.issue === "Rash")
                   issues = "Baby Identified with Rash";
                 jsonResult.map((row) => {
-                  if (Number(row.AGE) === Math.round(monthDiff)) {
-                    if (Number(metric.weight) < Number(row.BW - 200))
-                      weight = "Baby is Underweight";
-                    if (Number(metric.weight) > Number(row.BW + 200))
-                      weight = "Baby is Overweight";
-                    if (Number(metric.height) < Number(row.BH - 2))
-                      height = "Baby is Underheight";
-                    if (Number(metric.height) > Number(row.BH + 2))
-                      height = "Baby is Overheight";
+                  if (babyDetail.gender === "Male") {
+                    if (Number(row.AGE) === Math.round(monthDiff)) {
+                      if (Number(metric.weight) < Number(row.BLW))
+                        weight = `Baby is Underweight by ${
+                          row.BLW - metric.weight
+                        } grams`;
+                      if (Number(metric.weight) > Number(row.BUW))
+                        weight = `Baby is Overweight by ${
+                          metric.weight - row.BUW
+                        } grams`;
+                      if (Number(metric.height) < Number(row.BLL))
+                        height = `Baby is Underheight by ${(
+                          row.BLL - metric.height
+                        ).toFixed(2)} cm`;
+                      if (Number(metric.height) > Number(row.BUL))
+                        height = `Baby is Overheight by  ${(
+                          metric.height - row.BUL
+                        ).toFixed(2)} cm`;
+                    }
+                  } else {
+                    if (Number(row.AGE) === Math.round(monthDiff)) {
+                      if (Number(metric.weight) < Number(row.GLW))
+                        weight = `Baby is Underweight by ${
+                          row.BLW - metric.weight
+                        } grams`;
+                      if (Number(metric.weight) > Number(row.GUW))
+                        weight = `Baby is Overweight by ${
+                          metric.weight - row.BUW
+                        } grams`;
+                      if (Number(metric.height) < Number(row.GLL))
+                        height = `Baby is Underheight by ${(
+                          row.BLL - metric.height
+                        ).toFixed(2)} cm`;
+                      if (Number(metric.height) > Number(row.GUL))
+                        height = `Baby is Overheight by  ${(
+                          metric.height - row.BUL
+                        ).toFixed(2)} cm`;
+                    }
                   }
                 });
                 const alert = new Issue(height, weight, issues, temperature);

@@ -5,6 +5,10 @@ import weightIcon from "../../assets/weight icon.png";
 import skinIcon from "../../assets/skin.png";
 import heightIcon from "../../assets/height.png";
 import temperatureIcon from "../../assets/temperature.png";
+import successIcon from "../../assets/success.png";
+import { FaRegImages } from "react-icons/fa";
+import { AiOutlineLineChart } from "react-icons/ai";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 import moment from "moment";
 import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
@@ -12,8 +16,8 @@ import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
 import day from "dayjs";
 import * as d3 from "d3";
-import HeightThreshold from "../../assets/height-threshold.csv";
-import WeightThreshold from "../../assets/weight-threshold.csv";
+import thresholds from "../../assets/height-weight-threshold.csv";
+
 import "chartjs-plugin-annotation";
 class babyDetails extends Component {
   constructor() {
@@ -31,10 +35,14 @@ class babyDetails extends Component {
       girlHeights: [],
       boyWeights: [],
       girlWeights: [],
+      boyUpperHeights: [],
+      girlUpperHeights: [],
+      boyUpperWeights: [],
+      girlUpperWeights: [],
       temperature: [],
       authorized: false,
-      rash: 0,
       status: null,
+      rash: 0,
       noIssues: 0,
       currentAlert: null,
       alerts: [],
@@ -147,7 +155,29 @@ class babyDetails extends Component {
                         response.data[0].alerts.length - 1
                       ],
                   });
+
+                  var size = Object.keys(this.state.currentAlert).length;
+                  if (this.state.currentAlert.normal !== undefined) {
+                    this.setState({ status: "Normal" });
+                  } else if (
+                    size === 2 &&
+                    this.state.currentAlert.normal === undefined
+                  ) {
+                    this.setState({ status: "Good" });
+                  } else if (size === 3) {
+                    this.setState({ status: "Fair" });
+                  } else if (
+                    size === 4 &&
+                    this.state.currentAlert.height !== "Initial"
+                  ) {
+                    this.setState({ status: "Serious" });
+                  } else if (size === 5) {
+                    this.setState({ status: "Critical" });
+                  } else {
+                    this.setState({ status: "Undefined" });
+                  }
                   this.setState({ authorized: true, received: true });
+
                   this.renderChart();
                   this.renderChart2();
                   this.renderIssueChart();
@@ -170,17 +200,16 @@ class babyDetails extends Component {
   };
 
   getHeightThresholdValues = () => {
-    d3.csv(HeightThreshold).then((data) => {
+    d3.csv(thresholds).then((data) => {
       data.map((row) => {
-        this.state.boyHeights.push(Number(row.Boys));
-        this.state.girlHeights.push(Number(row.Girls));
-        return true;
-      });
-    });
-    d3.csv(WeightThreshold).then((data) => {
-      data.map((row) => {
-        this.state.boyWeights.push(Number(row.Boys));
-        this.state.girlWeights.push(Number(row.Girls));
+        this.state.boyHeights.push(Number(row.BLL));
+        this.state.girlHeights.push(Number(row.GLL));
+        this.state.boyWeights.push(Number(row.BLW));
+        this.state.girlWeights.push(Number(row.GLW));
+        this.state.boyUpperHeights.push(Number(row.BUL));
+        this.state.girlUpperHeights.push(Number(row.GUL));
+        this.state.boyUpperWeights.push(Number(row.BUW));
+        this.state.girlUpperWeights.push(Number(row.GUW));
         return true;
       });
     });
@@ -286,17 +315,31 @@ class babyDetails extends Component {
               data: this.state.weights,
             },
             {
-              label: "Girl Threshold",
+              label: "Lower Girl Threshold",
               backgroundColor: "rgba(255,153,0,0)",
               borderColor: "rgba(52, 73, 94 ,0.5)",
               data: this.state.girlWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
             {
-              label: "Boy Threshold",
+              label: "Lower Boy Threshold",
               backgroundColor: "rgba(255,153,0,0)",
               borderColor: "rgba(69, 179, 157,0.5)",
               data: this.state.boyWeights.slice(this.state.months[0]),
+              borderDash: [5, 5],
+            },
+            {
+              label: "Upper Girl Threshold",
+              backgroundColor: "rgba(255,153,0,0)",
+              borderColor: "rgba(52, 73, 94 ,0.5)",
+              data: this.state.girlUpperWeights.slice(this.state.months[0]),
+              borderDash: [5, 5],
+            },
+            {
+              label: "Upper Boy Threshold",
+              backgroundColor: "rgba(255,153,0,0)",
+              borderColor: "rgba(69, 179, 157,0.5)",
+              data: this.state.boyUpperWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
           ],
@@ -305,6 +348,7 @@ class babyDetails extends Component {
           responsive: true,
           maintainAspectRatio: true,
           //Customize chart options
+          legend: { position: "bottom" },
           scales: {
             xAxes: [
               {
@@ -340,8 +384,22 @@ class babyDetails extends Component {
           labels: this.state.months,
           datasets: [
             {
+              label: "Height",
+              backgroundColor: "rgba(236, 112, 99,0.4)",
+              borderColor: "rgba(236, 112, 99,1)",
+              data: this.state.heights,
+            },
+            {
               data: this.state.boyHeights.slice(this.state.months[0]),
               label: "Boy Threshold",
+              backgroundColor: "rgba(69, 179, 157,0)",
+              borderColor: "rgba(69, 179, 157,0.5)",
+              borderDash: [5, 5],
+            },
+
+            {
+              data: this.state.boyUpperHeights.slice(this.state.months[0]),
+              label: "Upper Boy Threshold",
               backgroundColor: "rgba(69, 179, 157,0)",
               borderColor: "rgba(69, 179, 157,0.5)",
               borderDash: [5, 5],
@@ -354,10 +412,11 @@ class babyDetails extends Component {
               borderDash: [5, 5],
             },
             {
-              label: "Height",
-              backgroundColor: "rgba(236, 112, 99,0.4)",
-              borderColor: "rgba(236, 112, 99,1)",
-              data: this.state.heights,
+              data: this.state.girlUpperHeights.slice(this.state.months[0]),
+              label: "Upper Girl Threshold",
+              backgroundColor: "rgba(69, 179, 157,0)",
+              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderDash: [5, 5],
             },
           ],
         },
@@ -365,6 +424,7 @@ class babyDetails extends Component {
           responsive: true,
           maintainAspectRatio: true,
           //Customize chart options
+          legend: { position: "bottom" },
           scales: {
             xAxes: [
               {
@@ -450,15 +510,49 @@ class babyDetails extends Component {
         <div className="container">
           <div className="d-flex flex-row justify-content-between mt-3">
             <div className="p-2">
-              <h1 className="">Baby Detail</h1>
+              <h1 className="baby-details-heading">Baby Detail</h1>
             </div>
             <div className="p-2">
-              <h2 className="badge-pill badge-light p-2">
-                Status:{" "}
-                <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
-                  Critical
-                </span>
-              </h2>
+              {this.state.status === "Undefined" && (
+                <h2 className="badge-pill badge-light p-2">
+                  Status:{" "}
+                  <span style={{ color: "#AF7AC5", fontWeight: "bold" }}>
+                    Never Scanned
+                  </span>
+                </h2>
+              )}
+              {this.state.status === "Critical" && (
+                <h2 className="badge-pill badge-light p-2">
+                  Status:{" "}
+                  <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
+                    {this.state.status}
+                  </span>
+                </h2>
+              )}
+              {this.state.status === "Fair" && (
+                <h2 className="badge-pill badge-light p-2">
+                  Status:{" "}
+                  <span style={{ color: "#DC7633", fontWeight: "bold" }}>
+                    {this.state.status}
+                  </span>
+                </h2>
+              )}
+              {this.state.status === "Serious" && (
+                <h2 className="badge-pill badge-light p-2">
+                  Status:{" "}
+                  <span style={{ color: "#E33D19", fontWeight: "bold" }}>
+                    {this.state.status}
+                  </span>
+                </h2>
+              )}
+              {this.state.status === "Normal" && (
+                <h2 className="badge-pill badge-light p-2">
+                  Status:{" "}
+                  <span style={{ color: "#58D68D", fontWeight: "bold" }}>
+                    {this.state.status}
+                  </span>
+                </h2>
+              )}
             </div>
           </div>
           <div className="row mt-2">
@@ -500,19 +594,21 @@ class babyDetails extends Component {
             <div className="col boxes">
               <div className="col-md-12 ">
                 <div className="col-md-12 ">
-                  <div className="pt-2">
+                  <div className="pt-2 baby-details-heading">
                     <span style={{ fontWeight: "bold", fontSize: "24px" }}>
                       Issues ᛫
                     </span>{" "}
-                    <span
-                      className="text-muted pl-1"
-                      style={{ fontSize: "20px" }}
-                    >
-                      As of{" "}
-                      {moment(this.state.currentAlert.date).format(
-                        "dddd Do MMMM, YYYY"
-                      )}
-                    </span>
+                    {this.state.currentAlert.date !== undefined && (
+                      <span
+                        className="text-muted pl-1"
+                        style={{ fontSize: "20px" }}
+                      >
+                        As of{" "}
+                        {moment(this.state.currentAlert.date).format(
+                          "dddd Do MMMM, YYYY"
+                        )}
+                      </span>
+                    )}
                   </div>
 
                   {this.state.currentAlert.weight !== undefined &&
@@ -525,20 +621,6 @@ class babyDetails extends Component {
                           </div>
                           <div className="col-sm-10">
                             {this.state.currentAlert.weight}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  {this.state.currentAlert.issue !== undefined &&
-                    this.state.currentAlert.issue !== "Initial" && (
-                      <div>
-                        <hr />
-                        <div className="row mt-1">
-                          <div className="col-sm-2">
-                            <img src={skinIcon} alt="icon" />
-                          </div>
-                          <div className="col-sm-10">
-                            {this.state.currentAlert.issue}
                           </div>
                         </div>
                       </div>
@@ -557,6 +639,21 @@ class babyDetails extends Component {
                         </div>
                       </div>
                     )}
+                  {this.state.currentAlert.issue !== undefined &&
+                    this.state.currentAlert.issue !== "Initial" && (
+                      <div>
+                        <hr />
+                        <div className="row mt-1">
+                          <div className="col-sm-2">
+                            <img src={skinIcon} alt="icon" />
+                          </div>
+                          <div className="col-sm-10">
+                            {this.state.currentAlert.issue}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                   {this.state.currentAlert.temperature !== undefined &&
                     this.state.currentAlert.temperature !== "Initial" && (
                       <div>
@@ -569,23 +666,29 @@ class babyDetails extends Component {
                             {this.state.currentAlert.temperature}
                           </div>
                         </div>
-                        <hr />
                       </div>
                     )}
-                  {this.state.currentAlert.normal !== undefined &&
-                    this.state.currentAlert.normal !== "Initial" && (
-                      <div>
-                        <hr />
-                        <div className="row mt-1">
-                          <div className="col-sm-2">
-                            <img src={skinIcon} alt="icon" />
-                          </div>
-                          <div className="col-sm-10">
-                            {this.state.currentAlert.normal}
-                          </div>
+                  {this.state.currentAlert.normal !== undefined && (
+                    <div>
+                      <hr />
+                      <div className="row mt-1">
+                        <div className="col-sm-2">
+                          <img src={successIcon} alt="icon" />
+                        </div>
+                        <div className="col-sm-10">
+                          {this.state.currentAlert.normal}
                         </div>
                       </div>
-                    )}
+                    </div>
+                  )}
+                  {this.state.status === "Undefined" && (
+                    <div className="baby-details-heading">
+                      <hr />
+                      <h4>No Issues to display</h4>
+                      <hr />
+                      <h5>Please have the baby scanned as soon as possible</h5>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -593,11 +696,16 @@ class babyDetails extends Component {
           {this.state.metrics.length > 0 && (
             <a
               href={`/baby/${this.state.babies._id}/pictures`}
-              className="btn btn-primary mt-3"
+              className="btn btn-primary mt-3 mr-4"
             >
+              <FaRegImages className="mr-2" />
               View Pictures
             </a>
           )}
+          <AnchorLink href="#charts" className="btn btn-outline-success mt-3">
+            <AiOutlineLineChart className="mr-2" />
+            View Charts
+          </AnchorLink>
 
           {this.state.metrics.length > 0 && (
             <ReactTabulator
@@ -612,48 +720,64 @@ class babyDetails extends Component {
             />
           )}
           {this.state.metrics.length === 0 && (
-            <h1 className="mt-4 ">
-              There are no available metrics for this baby
-            </h1>
+            <div>
+              <hr />
+              <h1 className="mt-4 mb-4">
+                There are no available metrics for this baby
+              </h1>
+              <br />
+              <hr />
+              <br />
+            </div>
           )}
-          <h1>Charts</h1>
-          <div className="mb-5">
-            <div className="">
-              <div className="col-md-12 chart">
-                <h4 className="chart-heading">Baby Age Against Weight</h4>
-                <hr />
-                <canvas id="weightChart" className="" ref={this.weightChart} />
+          <div id="charts">
+            <h1>Charts</h1>
+            <div className="mb-5">
+              <div className="">
+                <div className="col-md-12 chart">
+                  <h4 className="chart-heading">Baby Age Against Weight</h4>
+                  <hr />
+                  <canvas
+                    id="weightChart"
+                    className=""
+                    ref={this.weightChart}
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="chart">
+                  <h4 className="chart-heading">Baby Age Against Height</h4>
+                  <hr />
+                  <canvas
+                    id="heightChart"
+                    className=""
+                    ref={this.heightChart}
+                  />
+                </div>
               </div>
             </div>
-            <div className="mt-4">
-              <div className="chart">
-                <h4 className="chart-heading">Baby Age Against Height</h4>
-                <hr />
-                <canvas id="heightChart" className="" ref={this.heightChart} />
-              </div>
-            </div>
-          </div>
-          <div className="row mt-4 mb-5">
-            <div className="col-md-6 ">
-              <div className="col-md-12 chart">
-                <h4 className="chart-heading">Skin Issues</h4>
+            <div className="row mt-4 mb-5">
+              <div className="col-md-6 ">
+                <div className="col-md-12 chart">
+                  <h4 className="chart-heading">Skin Issues</h4>
 
-                <hr />
-                <canvas id="issueChart" className="" ref={this.issueChart} />
+                  <hr />
+                  <canvas id="issueChart" className="" ref={this.issueChart} />
+                </div>
               </div>
-            </div>
 
-            <div className="col-md-6 ">
-              <div className="col-md-12 chart">
-                <h4 className="chart-heading">
-                  Baby Age Against Temperature in °C
-                </h4>
-                <hr />
-                <canvas
-                  id="temperatureChart"
-                  className=""
-                  ref={this.tempreatureChart}
-                />
+              <div className="col-md-6 ">
+                <div className="col-md-12 chart">
+                  <h4 className="chart-heading">
+                    Baby Age Against Temperature in °C
+                  </h4>
+                  <hr />
+                  <canvas
+                    id="temperatureChart"
+                    className=""
+                    ref={this.tempreatureChart}
+                  />
+                </div>
               </div>
             </div>
           </div>

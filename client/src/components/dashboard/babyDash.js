@@ -10,6 +10,7 @@ import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
 import Chart from "chart.js";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 class babyDash extends Component {
   constructor() {
@@ -467,70 +468,81 @@ class babyDash extends Component {
       this.state.user.job_title === "Admin"
     ) {
       return (
-        <div className="p-5">
-          <h1>All Babies</h1>
-          <ReactTabulator
-            options={options}
-            ref={(ref) => (this.ref = ref)}
-            data={this.state.babies}
-            columns={this.state.columns}
-            tooltips={true}
-            layout={"fitData"}
-            rowClick={this.rowClick}
-          />
+        <div>
+          <div className="p-5">
+            <AnchorLink href="#data-analytics">Data Analytics</AnchorLink>
+            <h1>All Babies</h1>
+            <ReactTabulator
+              options={options}
+              ref={(ref) => (this.ref = ref)}
+              data={this.state.babies}
+              columns={this.state.columns}
+              tooltips={true}
+              layout={"fitData"}
+              rowClick={this.rowClick}
+            />
 
-          <ToastsContainer
-            store={ToastsStore}
-            position={ToastsContainerPosition.TOP_RIGHT}
-          />
+            <ToastsContainer
+              store={ToastsStore}
+              position={ToastsContainerPosition.TOP_RIGHT}
+            />
 
-          <div className="container">
-            <h1 className="mt-4">Data Analytics</h1>
-            <div className="row mt-4 mb-5">
-              <div className="col-md-6 ">
-                <div className="col-md-12 chart">
-                  <h4 className="chart-heading">Skin Issues</h4>
+            <div className="container" id="data-analytics">
+              <h1 className="mt-3">Data Analytics</h1>
+              <div className="row mt-4 mb-5">
+                <div className="col-md-6 ">
+                  <div className="col-md-12 chart">
+                    <h4 className="chart-heading">Skin Issues</h4>
 
-                  <hr />
-                  <canvas id="issueChart" className="" ref={this.issueChart} />
+                    <hr />
+                    <canvas
+                      id="issueChart"
+                      className=""
+                      ref={this.issueChart}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6 ">
+                  <div className="col-md-12 chart">
+                    <h4 className="chart-heading">Babies per Location</h4>
+
+                    <hr />
+                    <canvas
+                      id="issueChart"
+                      className=""
+                      ref={this.locationChart}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="col-md-6 ">
-                <div className="col-md-12 chart">
-                  <h4 className="chart-heading">Babies per Location</h4>
+              <div className="row mt-4 mb-5">
+                <div className="col-md-6 ">
+                  <div className="col-md-12 chart">
+                    <h4 className="chart-heading">
+                      Average Height against Location
+                    </h4>
 
-                  <hr />
-                  <canvas
-                    id="issueChart"
-                    className=""
-                    ref={this.locationChart}
-                  />
+                    <hr />
+                    <canvas
+                      id="issueChart"
+                      className=""
+                      ref={this.stackedHeightChart}
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="row mt-4 mb-5">
-              <div className="col-md-6 ">
-                <div className="col-md-12 chart">
-                  <h4 className="chart-heading">
-                    Average Height against Location
-                  </h4>
+                <div className="col-md-6 ">
+                  <div className="col-md-12 chart">
+                    <h4 className="chart-heading">
+                      Average Weight against Location
+                    </h4>
 
-                  <hr />
-                  <canvas
-                    id="issueChart"
-                    className=""
-                    ref={this.stackedHeightChart}
-                  />
-                </div>
-              </div>
-              <div className="col-md-6 ">
-                <div className="col-md-12 chart">
-                  <h4 className="chart-heading">
-                    Average Weight against Location
-                  </h4>
-
-                  <hr />
-                  <canvas id="issueChart" className="" ref={this.weightChart} />
+                    <hr />
+                    <canvas
+                      id="issueChart"
+                      className=""
+                      ref={this.weightChart}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 .photoImg {
   object-fit: cover;
   min-height: 350px;
@@ -200,6 +201,9 @@ footer {
   -moz-animation: bounce 3s infinite;
   -webkit-animation: bounce 3s infinite;
   animation: bounce 3s infinite;
+}
+.baby-details-heading {
+  font-family: "Poppins", sans-serif;
 }
 @-moz-keyframes bounce {
   0%,

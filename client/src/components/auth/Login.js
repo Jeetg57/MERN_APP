@@ -37,9 +37,12 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container vertical-center">
         <div className="login-form">
-          <h1 className="text-center mt-5">Login</h1>
+          <h1 className="text-center mt-2">Login</h1>
+          <h3 className="text-center text-muted">
+            Please enter your email and password
+          </h3>
           <form onSubmit={this.onFormSubmit}>
             <div className="form-group">
               <label>Email address</label>

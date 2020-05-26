@@ -64,10 +64,10 @@ class Signup extends Component {
       );
     } else {
       return (
-        <div className="container">
-          <div className="login-form container">
+        <div className="container vertical-center">
+          <div className="login-form">
             <div>
-              <h1 className="card-title text-center">Sign-up</h1>
+              <h1 className="text-center">Sign-up</h1>
             </div>
             <form onSubmit={this.onFormSubmit}>
               <div className="form-row">
