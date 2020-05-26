@@ -48,11 +48,13 @@ class babyPictures extends Component {
             >
               <AiOutlineArrowLeft /> Go Back
             </a>
-            <div className="chart mt-4">
-              <h2>Baby ID: {this.state.baby.regId}</h2>
-              <h2>
-                Name: {this.state.baby.firstName} {this.state.baby.lastName}
-              </h2>
+            <div className="mt-4">
+              <div className="boxes">
+                <h2>Baby ID: {this.state.baby.regId}</h2>
+                <h2>
+                  Name: {this.state.baby.firstName} {this.state.baby.lastName}
+                </h2>
+              </div>
             </div>
           </div>
         )}

@@ -130,7 +130,7 @@ class Signup extends Component {
                     <option value="" defaultValue>
                       None
                     </option>
-                    <option value="Administrator">Administrator</option>
+                    <option value="Admin">Administrator</option>
                     <option value="Data Analyst">Data Analyst</option>
                     <option value="Doctor">Doctor</option>
                     <option value="Registrant">Registrant</option>
