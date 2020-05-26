@@ -245,7 +245,8 @@ footer {
 
 @media (max-width: 800px) {
   .my-container {
-    margin: auto;
+    margin: 3em;
+    letter-spacing: normal;
   }
   .text-content .head {
     font-size: 20px;
@@ -264,5 +265,17 @@ footer {
   }
   .text-content > h2 {
     font-size: 16px;
+  }
+  .vertical-center {
+    position: absolute;
+  }
+
+  .horizontal-center {
+    position: relative;
+  }
+}
+@media (max-width: 1200px) {
+  .bounce {
+    display: none;
   }
 }
