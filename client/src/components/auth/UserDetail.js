@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./userDetail.css";
 import axios from "axios";
 import { FaSignOutAlt } from "react-icons/fa";
+import image from "../../assets/loading.gif";
+
 import { AiTwotoneDelete } from "react-icons/ai";
 class UserDetail extends Component {
   constructor() {
@@ -120,8 +122,11 @@ class UserDetail extends Component {
       );
     } else {
       return (
-        <div className="container">
-          <h1>Loading...</h1>
+        <div className="container mt-3">
+          <div className="vertical-center">
+            <img src={image} alt="Loading"></img>
+            <h1 className="horizontal-center">Loading</h1>
+          </div>
         </div>
       );
     }

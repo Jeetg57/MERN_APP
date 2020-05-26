@@ -38,9 +38,9 @@ class babyPictures extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="">
         {this.state.received === true && (
-          <div>
+          <div className="container">
             <a
               href={`/baby/${this.state.baby._id}`}
               style={{ fontSize: "32px" }}
@@ -58,9 +58,9 @@ class babyPictures extends Component {
             </div>
           </div>
         )}
-        <div>
+        <div className="container">
           <h1>Images</h1>
-          <div className="d-flex flex-row bd-highlight mb-3 flex-wrap justify-content-center">
+          <div className="d-flex flex-row bd-highlight mb-3 flex-wrap">
             {this.state.metrics.map((metric) => (
               <div className="card">
                 <img
@@ -77,10 +77,9 @@ class babyPictures extends Component {
         </div>
         {this.state.received === false && (
           <div className="container mt-3">
-            <div>
-              <h1>Loading</h1>
-              <h3>Please be patient</h3>
+            <div className="vertical-center">
               <img src={image} alt="Loading"></img>
+              <h1 className="horizontal-center">Loading</h1>
             </div>
           </div>
         )}

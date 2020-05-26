@@ -484,10 +484,9 @@ class babyDetails extends Component {
     if (this.state.received === false) {
       return (
         <div className="container mt-3">
-          <div>
-            <h1>Loading</h1>
-            <h3>Please be patient</h3>
+          <div className="vertical-center">
             <img src={image} alt="Loading"></img>
+            <h1 className="horizontal-center">Loading</h1>
           </div>
         </div>
       );
