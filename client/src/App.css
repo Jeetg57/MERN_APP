@@ -268,6 +268,8 @@ footer {
   .baby-card {
     margin-bottom: 20px;
     margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
   }
   .issue-card {
     margin: 0 20px 30px;
@@ -280,6 +282,12 @@ footer {
   }
   .footer-head {
     font-size: 16px;
+  }
+  .babyDetails>.row>.col {
+    font-size: 16px;
+  }
+  .baby-details-heading {
+    font-size: 35px;
   }
 }
 
