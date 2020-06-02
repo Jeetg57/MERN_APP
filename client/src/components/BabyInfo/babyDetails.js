@@ -68,36 +68,43 @@ class babyDetails extends Component {
         {
           title: "Height (cm)",
           field: "height",
+          minWidth: 90,
           headerFilter: "input",
         },
         {
           title: "Weight (g)",
           field: "weight",
+          minWidth: 90,
           headerFilter: "input",
         },
         {
           title: "Temperature (°C)",
           field: "temperature",
+          minWidth: 90,
           headerFilter: "input",
         },
         {
           title: "Location",
           field: "location",
+          minWidth: 90,
           headerFilter: "input",
         },
         {
           title: "Issue",
           field: "issue",
+          minWidth: 90,
           headerFilter: "input",
         },
         {
           title: "Score",
           field: "score",
+          minWidth: 90,
         },
         {
           title: "Date",
           field: "date",
           sorter: "date",
+          minWidth: 90,
           formatter: this.dateFormatter,
         },
       ],
@@ -154,7 +161,7 @@ class babyDetails extends Component {
                         response.data[0].alerts.length - 1
                       ],
                   });
-
+                  console.log(typeof this.state.currentAlert?.temperature);
                   var size = Object.keys(this.state.currentAlert).length;
                   if (this.state.currentAlert.normal !== undefined) {
                     this.setState({ status: "Normal" });
@@ -507,12 +514,12 @@ class babyDetails extends Component {
       return (
         <div className="container">
           <div className="d-flex flex-row justify-content-between mt-3">
-            <div className="p-2">
+            <div className="flex-grow-1">
               <h1 className="baby-details-heading">Baby Detail</h1>
             </div>
-            <div className="p-2">
+            <div className="ml-auto p-2">
               {this.state.status === "Undefined" && (
-                <h2 className="badge-pill badge-light p-2">
+                <h2 className="badge-pill badge-light status-message">
                   Status:{" "}
                   <span style={{ color: "#AF7AC5", fontWeight: "bold" }}>
                     Never Scanned
@@ -520,7 +527,7 @@ class babyDetails extends Component {
                 </h2>
               )}
               {this.state.status === "Critical" && (
-                <h2 className="badge-pill badge-light p-2">
+                <h2 className="badge-pill badge-light p-2 status-message">
                   Status:{" "}
                   <span style={{ color: "#DD1010  ", fontWeight: "bold" }}>
                     {this.state.status}
@@ -528,7 +535,7 @@ class babyDetails extends Component {
                 </h2>
               )}
               {this.state.status === "Fair" && (
-                <h2 className="badge-pill badge-light p-2">
+                <h2 className="badge-pill badge-light p-2 status-message">
                   Status:{" "}
                   <span style={{ color: "#DC7633", fontWeight: "bold" }}>
                     {this.state.status}
@@ -536,7 +543,7 @@ class babyDetails extends Component {
                 </h2>
               )}
               {this.state.status === "Serious" && (
-                <h2 className="badge-pill badge-light p-2">
+                <h2 className="badge-pill badge-light p-2 status-message">
                   Status:{" "}
                   <span style={{ color: "#E33D19", fontWeight: "bold" }}>
                     {this.state.status}
@@ -544,7 +551,7 @@ class babyDetails extends Component {
                 </h2>
               )}
               {this.state.status === "Normal" && (
-                <h2 className="badge-pill badge-light p-2">
+                <h2 className="badge-pill badge-light p-2 status-message">
                   Status:{" "}
                   <span style={{ color: "#58D68D", fontWeight: "bold" }}>
                     {this.state.status}
@@ -554,7 +561,7 @@ class babyDetails extends Component {
             </div>
           </div>
           <div className="row mt-2">
-            <div className="col-md-7">
+            <div className="col-md-7 baby-card">
               <div className="col-md-12 boxes">
                 <div className="col babyDetails">
                   <div className="row mt-4">
@@ -589,7 +596,7 @@ class babyDetails extends Component {
                 </div>
               </div>
             </div>
-            <div className="col boxes">
+            <div className="col boxes issue-card">
               <div className="col-md-12 ">
                 <div className="col-md-12 ">
                   <div className="pt-2 baby-details-heading">
@@ -764,7 +771,7 @@ class babyDetails extends Component {
                 </div>
               </div>
 
-              <div className="col-md-6 ">
+              <div className="col-md-6 pad-chart">
                 <div className="col-md-12 chart">
                   <h4 className="chart-heading">
                     Baby Age Against Temperature in °C

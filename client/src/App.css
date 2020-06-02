@@ -81,7 +81,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.my-container > h1 {
+.my-container>h1 {
   text-decoration: underline;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
@@ -109,7 +109,7 @@
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.text-content > a {
+.text-content>a {
   margin-left: 40px;
   font-size: 26px;
   font-family: "Montserrat", sans-serif;
@@ -119,13 +119,13 @@
   padding: 20px 10%;
 }
 
-.section-one > h1 {
+.section-one>h1 {
   font-size: 60px;
   text-decoration: underline;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.text-content > h2 {
+.text-content>h2 {
   font-size: 30px;
   font-family: "Montserrat", sans-serif;
 }
@@ -136,21 +136,19 @@ footer {
   color: white;
 }
 
-.babyDetails > .row > .col {
+.babyDetails>.row>.col {
   font-family: "Jost", sans-serif;
   font-size: 30px;
 }
 
-.babyDetails > .row > .detail_title {
+.babyDetails>.row>.detail_title {
   font-size: 30px;
   color: #34495e;
   font-weight: bold;
 }
 
 .boxes {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
-    0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
-    0 16px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   padding: 10px;
   background-color: #fbfcfc;
@@ -174,20 +172,19 @@ footer {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
 .bounce {
   -moz-animation: bounce 3s infinite;
   -webkit-animation: bounce 3s infinite;
   animation: bounce 3s infinite;
 }
+
 .baby-details-heading {
   font-family: "Poppins", sans-serif;
 }
+
 @-moz-keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
+  0%, 20%, 50%, 80%, 100% {
     -moz-transform: translateY(0);
     transform: translateY(0);
   }
@@ -200,12 +197,9 @@ footer {
     transform: translateY(-15px);
   }
 }
+
 @-webkit-keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
+  0%, 20%, 50%, 80%, 100% {
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
@@ -218,12 +212,9 @@ footer {
     transform: translateY(-15px);
   }
 }
+
 @keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
+  0%, 20%, 50%, 80%, 100% {
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
     -webkit-transform: translateY(0);
@@ -254,16 +245,16 @@ footer {
   .text-content .head2 {
     font-size: 18px;
   }
-  .section-one > h1 {
+  .section-one>h1 {
     font-size: 20px;
   }
-  .section-one > h2 {
+  .section-one>h2 {
     font-size: 16px;
   }
-  .text-content > a {
+  .text-content>a {
     font-size: 16px;
   }
-  .text-content > h2 {
+  .text-content>h2 {
     font-size: 16px;
   }
   .vertical-center {
@@ -274,9 +265,29 @@ footer {
     position: unset;
     display: unset;
   }
+  .baby-card {
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  .issue-card {
+    margin: 0 20px 30px;
+  }
+  .pad-chart {
+    margin-top: 45px;
+  }
+  .status-message {
+    font-size: 12px;
+  }
+  .footer-head {
+    font-size: 16px;
+  }
 }
+
 @media (max-width: 1200px) {
   .bounce {
     display: none;
   }
+  /* .status-message {
+    font-size: 20px;
+  } */
 }

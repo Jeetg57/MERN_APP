@@ -35,6 +35,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 router.post("/", upload.single("file"), async (req, res, next) => {
+  console.log(req.body);
   const baby = await BabyMetrics.findOne({ regId: req.body.regID });
   if (!baby)
     return res.status(400).send("No Baby found with this Registration ID");
@@ -175,6 +176,150 @@ router.post("/", upload.single("file"), async (req, res, next) => {
     console.log(err);
   }
 });
+var upload = multer({ storage: storage });
+router.post("/arduino/", upload.single("file"), async (req, res, next) => {
+  console.log(req.query);
+  const baby = await BabyMetrics.findOne({ regId: req.query.regID });
+  if (!baby)
+    return res.status(400).send("No Baby found with this Registration ID");
+  const file = req.file;
+  if (!file) {
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
+  try {
+    var visualRecognition = new VisualRecognitionV3({
+      version: "2018-03-19",
+      authenticator: new IamAuthenticator({ apikey: process.env.WATSON_API }),
+      url: "https://gateway.watsonplatform.net/visual-recognition/api",
+    });
+
+    var images_file = fs.createReadStream(`./uploads/${file.filename}`);
+    var classifier_ids = ["RashIdentificationModel_1554186704"];
+    var threshold = 0.6;
+
+    var params = {
+      imagesFile: images_file,
+      classifierIds: classifier_ids,
+      threshold: threshold,
+    };
+    visualRecognition.classify(params, async function (err, response) {
+      let issue, score;
+      if (err) {
+        console.log(err);
+      } else {
+        if (response.result.images[0].classifiers[0].classes[0] === undefined) {
+          res.status(400).send({
+            msg: "Unable to determine, please use a better image",
+          });
+        } else {
+          issue = response.result.images[0].classifiers[0].classes[0].class;
+          score = response.result.images[0].classifiers[0].classes[0].score;
+          const metric = {
+            height: Number(req.query.height),
+            weight: Number(req.query.weight),
+            temperature: Number(req.query.temperature),
+            file: {
+              filename: file.filename,
+              path: file.filename,
+              size: Number(file.size),
+            },
+            location: req.query.location,
+            issue: issue,
+            score: Number(score),
+            date: new Date(),
+          };
+
+          try {
+            const savedResult = await BabyMetrics.updateOne(
+              { regId: req.query.regID },
+              { $push: { metrics: metric } }
+            );
+            const babyDetail = await BabyMetrics.findOne({
+              regId: req.query.regID,
+            });
+
+            var jsonResult = [];
+
+            fs.createReadStream(
+              path.resolve(__dirname, "../", "assets", "HEIGHT_WEIGHT2.csv")
+            )
+              .pipe(csv.parse({ headers: true }))
+              .on("error", (error) => console.error(error))
+              .on("data", (row) => {
+                jsonResult.push(row);
+              })
+              .on("end", async () => {
+                let weight, height, issues, temperature;
+                var a = moment(metric.date);
+                var b = moment(babyDetail.birthDate);
+                const monthDiff = a.diff(b, "months", true);
+                if (Number(metric.temperature) > 37.5)
+                  temperature = "High Temperature";
+                if (Number(metric.temperature) < 35.5)
+                  temperature = "Low Temperature";
+                if (metric.issue === "Rash")
+                  issues = "Baby Identified with Rash";
+                jsonResult.map((row) => {
+                  if (babyDetail.gender === "Male") {
+                    if (Number(row.AGE) === Math.round(monthDiff)) {
+                      if (Number(metric.weight) < Number(row.BLW))
+                        weight = `Baby is Underweight by ${
+                          row.BLW - metric.weight
+                        } grams`;
+                      if (Number(metric.weight) > Number(row.BUW))
+                        weight = `Baby is Overweight by ${
+                          metric.weight - row.BUW
+                        } grams`;
+                      if (Number(metric.height) < Number(row.BLL))
+                        height = `Baby is Underheight by ${(
+                          row.BLL - metric.height
+                        ).toFixed(2)} cm`;
+                      if (Number(metric.height) > Number(row.BUL))
+                        height = `Baby is Overheight by  ${(
+                          metric.height - row.BUL
+                        ).toFixed(2)} cm`;
+                    }
+                  } else {
+                    if (Number(row.AGE) === Math.round(monthDiff)) {
+                      if (Number(metric.weight) < Number(row.GLW))
+                        weight = `Baby is Underweight by ${
+                          row.BLW - metric.weight
+                        } grams`;
+                      if (Number(metric.weight) > Number(row.GUW))
+                        weight = `Baby is Overweight by ${
+                          metric.weight - row.BUW
+                        } grams`;
+                      if (Number(metric.height) < Number(row.GLL))
+                        height = `Baby is Underheight by ${(
+                          row.BLL - metric.height
+                        ).toFixed(2)} cm`;
+                      if (Number(metric.height) > Number(row.GUL))
+                        height = `Baby is Overheight by  ${(
+                          metric.height - row.BUL
+                        ).toFixed(2)} cm`;
+                    }
+                  }
+                });
+                const alert = new Issue(height, weight, issues, temperature);
+                const savedResult = await BabyMetrics.updateOne(
+                  { regId: req.query.regID },
+                  { $push: { alerts: alert } }
+                );
+              });
+            res.json(savedResult);
+          } catch (err) {
+            res.json({ message: err });
+          }
+        }
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 function Issue(height, weight, issue, temperature) {
   if (height !== undefined) this.height = height;
   if (weight !== undefined) this.weight = weight;

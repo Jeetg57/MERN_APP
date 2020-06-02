@@ -54,6 +54,7 @@ class babyDash extends Component {
         { title: "_id", field: "_id", visible: false },
         {
           title: "Registration ID",
+          minWidth: 100,
           field: "regId",
           headerFilter: "input",
         },
@@ -61,30 +62,38 @@ class babyDash extends Component {
           title: "First Name",
           field: "firstName",
           headerFilter: "input",
+          minWidth: 100,
         },
         {
           title: "Last Name",
           field: "lastName",
           headerFilter: "input",
+          minWidth: 100,
         },
         {
           title: "Gender",
           field: "gender",
           headerFilter: "input",
+          minWidth: 100,
         },
         {
           title: "Parent Name",
           field: "parentName",
           headerFilter: "input",
+          minWidth: 100,
         },
         {
           title: "Phone Number",
           field: "phoneNumber",
           headerFilter: "input",
+
+          minWidth: 100,
         },
         {
           title: "Number Scanned",
           field: "metrics.length",
+
+          minWidth: 100,
         },
       ],
     });
@@ -438,6 +447,7 @@ class babyDash extends Component {
     const options = {
       pagination: "local",
       paginationSize: 20,
+      reponsiveLayout: "hide",
       initialSort: [
         { column: "regId", dir: "asc" }, //sort by this first
       ],
@@ -477,7 +487,7 @@ class babyDash extends Component {
               data={this.state.babies}
               columns={this.state.columns}
               tooltips={true}
-              layout={"fitData"}
+              responsiveLayout="hide"
               rowClick={this.rowClick}
             />
 
@@ -501,9 +511,9 @@ class babyDash extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-md-6 ">
+                <div className="col-md-6 pad-chart">
                   <div className="col-md-12 chart">
-                    <h4 className="chart-heading">Babies per Location</h4>
+                    <h4 className="chart-heading">Entries per Location</h4>
 
                     <hr />
                     <canvas
@@ -529,7 +539,7 @@ class babyDash extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-md-6 ">
+                <div className="col-md-6 pad-chart">
                   <div className="col-md-12 chart">
                     <h4 className="chart-heading">
                       Average Weight against Location
@@ -563,7 +573,7 @@ class babyDash extends Component {
             </div>
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
-                <h4 className="chart-heading">Babies per Location</h4>
+                <h4 className="chart-heading">Entries per Location</h4>
 
                 <hr />
                 <canvas id="issueChart" className="" ref={this.locationChart} />

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import image from "../../assets/loading.gif";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import moment from "moment";
 class babyPictures extends Component {
   constructor() {
     super();
@@ -70,6 +71,9 @@ class babyPictures extends Component {
                 />
                 <div class="card-body">
                   <h5 class="card-title">{metric.issue}</h5>
+                  <h5 class="card-title">
+                    {moment(metric.date).format("ddd DD/MM/YYYY")}
+                  </h5>
                 </div>
               </div>
             ))}

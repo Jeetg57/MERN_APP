@@ -38,7 +38,7 @@ class Home extends Component {
               <FaChevronDown style={{ fontSize: "40px" }} className="mt-5" />
             </AnchorLink>
           </div>
-          <div className="col">
+          <div className="col ">
             <img src={babyImg} className="w-100" alt="Baby kissed"></img>
           </div>
         </div>
@@ -139,7 +139,7 @@ class Home extends Component {
         <footer className="page-footer">
           <div className="row ">
             <div class="col">
-              <h3>
+              <h3 className="footer-head">
                 You can find us at the United States International University -
                 Africa.
               </h3>
