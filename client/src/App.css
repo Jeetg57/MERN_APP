@@ -289,6 +289,11 @@ footer {
   .baby-details-heading {
     font-size: 35px;
   }
+  .chart-resp {
+    position: relative;
+    height: 100vh;
+    width: 80vw;
+  }
 }
 
 @media (max-width: 1200px) {

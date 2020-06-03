@@ -744,7 +744,7 @@ class babyDetails extends Component {
                   <hr />
                   <canvas
                     id="weightChart"
-                    className=""
+                    className="chart-resp"
                     ref={this.weightChart}
                   />
                 </div>
@@ -755,7 +755,7 @@ class babyDetails extends Component {
                   <hr />
                   <canvas
                     id="heightChart"
-                    className=""
+                    className="chart-resp"
                     ref={this.heightChart}
                   />
                 </div>
@@ -767,7 +767,11 @@ class babyDetails extends Component {
                   <h4 className="chart-heading">Skin Issues</h4>
 
                   <hr />
-                  <canvas id="issueChart" className="" ref={this.issueChart} />
+                  <canvas
+                    id="issueChart"
+                    className="chart-resp"
+                    ref={this.issueChart}
+                  />
                 </div>
               </div>
 
@@ -779,7 +783,7 @@ class babyDetails extends Component {
                   <hr />
                   <canvas
                     id="temperatureChart"
-                    className=""
+                    className="chart-resp"
                     ref={this.tempreatureChart}
                   />
                 </div>

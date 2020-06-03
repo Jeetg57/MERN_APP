@@ -442,9 +442,15 @@ class babyDash extends Component {
       });
     this.getPhotos();
   }
+  tableRef = React.createRef();
+  csvDown = (type) => {
+    this.tableRef.current.table.download(type, `data.${type}`);
+  };
 
   render() {
     const options = {
+      downloadDataFormatter: (data) => data,
+      downloadReady: (fileContents, blob) => blob,
       pagination: "local",
       paginationSize: 20,
       reponsiveLayout: "hide",
@@ -480,10 +486,55 @@ class babyDash extends Component {
         <div>
           <div className="p-5">
             <AnchorLink href="#data-analytics">Data Analytics</AnchorLink>
-            <h1>All Babies</h1>
+            <div className="d-flex flex-row justify-content-between mt-3">
+              <div className="flex-grow-1">
+                <h1>All Babies</h1>
+              </div>
+              <div class="dropdown show text-right ml-auto p-2">
+                <but
+                  class="btn btn-outline-warning dropdown-toggle"
+                  href="#"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Download Data
+                </but>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <button
+                    className="dropdown-item btn-link"
+                    onClick={() => this.csvDown("csv")}
+                  >
+                    CSV
+                  </button>
+                  <button
+                    className="dropdown-item btn-link"
+                    onClick={() => this.csvDown("json")}
+                  >
+                    JSON
+                  </button>
+                  {/* <button
+                    className="dropdown-item btn-link"
+                    onClick={() => this.csvDown("xlxs")}
+                  >
+                    Excel
+                  </button>
+
+                  <button
+                    className="dropdown-item btn-link"
+                    onClick={() => this.csvDown("pdf")}
+                  >
+                    PDF
+                  </button> */}
+                </div>
+              </div>
+            </div>
             <ReactTabulator
               options={options}
-              ref={(ref) => (this.ref = ref)}
+              ref={this.tableRef}
               data={this.state.babies}
               columns={this.state.columns}
               tooltips={true}
