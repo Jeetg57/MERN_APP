@@ -323,7 +323,7 @@ class babyDetails extends Component {
             {
               label: "Lower Girl Threshold",
               backgroundColor: "rgba(255,153,0,0)",
-              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderColor: "rgba(255, 43, 248 ,0.5)",
               data: this.state.girlWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
@@ -337,7 +337,7 @@ class babyDetails extends Component {
             {
               label: "Upper Girl Threshold",
               backgroundColor: "rgba(255,153,0,0)",
-              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderColor: "rgba(255, 43, 248 ,0.5)",
               data: this.state.girlUpperWeights.slice(this.state.months[0]),
               borderDash: [5, 5],
             },
@@ -354,7 +354,7 @@ class babyDetails extends Component {
           responsive: true,
           maintainAspectRatio: true,
           //Customize chart options
-          legend: { position: "bottom" },
+          legend: { display: false, position: "top" },
           scales: {
             xAxes: [
               {
@@ -391,8 +391,8 @@ class babyDetails extends Component {
           datasets: [
             {
               label: "Height",
-              backgroundColor: "rgba(236, 112, 99,0.4)",
-              borderColor: "rgba(236, 112, 99,1)",
+              backgroundColor: "rgba(205, 97, 85,0.4)",
+              borderColor: "rgba(205, 97, 85 ,1)",
               data: this.state.heights,
             },
             {
@@ -414,14 +414,14 @@ class babyDetails extends Component {
               data: this.state.girlHeights.slice(this.state.months[0]),
               label: "Girl Threshold",
               backgroundColor: "rgba(69, 179, 157,0)",
-              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderColor: "rgba(255, 43, 248 ,0.5)",
               borderDash: [5, 5],
             },
             {
               data: this.state.girlUpperHeights.slice(this.state.months[0]),
               label: "Upper Girl Threshold",
               backgroundColor: "rgba(69, 179, 157,0)",
-              borderColor: "rgba(52, 73, 94 ,0.5)",
+              borderColor: "rgba(255, 43, 248 ,0.5)",
               borderDash: [5, 5],
             },
           ],
@@ -430,7 +430,7 @@ class babyDetails extends Component {
           responsive: true,
           maintainAspectRatio: true,
           //Customize chart options
-          legend: { position: "bottom" },
+          legend: { display: false, position: "top" },
           scales: {
             xAxes: [
               {
@@ -513,7 +513,7 @@ class babyDetails extends Component {
     } else {
       return (
         <div className="container">
-          <div className="d-flex flex-row justify-content-between mt-3">
+          <div className="d-flex flex-row justify-content-between mt-3 align-items-center">
             <div className="flex-grow-1">
               <h1 className="baby-details-heading">Baby Detail</h1>
             </div>

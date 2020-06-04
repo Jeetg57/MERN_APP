@@ -12,7 +12,7 @@ class About extends Component {
           </div>
           <div className="my-container">
             <h1 className="">The Problem the project addresses</h1>
-            <p className="text-justify">
+            <p className="problem-intro">
               In most rural areas in Kenya, access to basic child health
               services often requires a long journey to the nearest health
               facility. The cost of the journey in addition to the small fee
@@ -32,7 +32,7 @@ class About extends Component {
             </p>
 
             <h1 className="mt-3">Project Scope</h1>
-            <p className="text-justify">
+            <p className="problem-intro">
               The project will focus on babies (0-9 months) who need to visit
               the clinic almost every month for routine screening tests. It can
               be scaled to take care of children under 5 years. This project
@@ -46,7 +46,7 @@ class About extends Component {
             </p>
 
             <h1 className="mt-3">Innovative aspects of the design</h1>
-            <p className="text-justify">
+            <p className="problem-intro">
               The current infant screening process requires a mother to go to a
               medical facility with their baby which is inconvenient, costly and
               time consuming. It sometimes takes hours just to get to the
