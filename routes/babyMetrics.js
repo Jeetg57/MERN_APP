@@ -176,18 +176,9 @@ router.post("/", upload.single("file"), async (req, res, next) => {
     console.log(err);
   }
 });
-var upload = multer({ storage: storage });
-router.post("/arduino/", upload.single("file"), async (req, res, next) => {
+router.post("/arduino/", async (req, res, next) => {
   console.log(req.query);
   const baby = await BabyMetrics.findOne({ regId: req.query.regID });
-  if (!baby)
-    return res.status(400).send("No Baby found with this Registration ID");
-  const file = req.file;
-  if (!file) {
-    const error = new Error("Please upload a file");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
   try {
     var visualRecognition = new VisualRecognitionV3({
       version: "2018-03-19",
@@ -195,7 +186,7 @@ router.post("/arduino/", upload.single("file"), async (req, res, next) => {
       url: "https://gateway.watsonplatform.net/visual-recognition/api",
     });
 
-    var images_file = fs.createReadStream(`./uploads/${file.filename}`);
+    var images_file = fs.createReadStream(`./uploads/test.jpeg`);
     var classifier_ids = ["RashIdentificationModel_1554186704"];
     var threshold = 0.6;
 
@@ -221,9 +212,8 @@ router.post("/arduino/", upload.single("file"), async (req, res, next) => {
             weight: Number(req.query.weight),
             temperature: Number(req.query.temperature),
             file: {
-              filename: file.filename,
-              path: file.filename,
-              size: Number(file.size),
+              filename: "test.jpeg",
+              path: "test.jpeg",
             },
             location: req.query.location,
             issue: issue,
