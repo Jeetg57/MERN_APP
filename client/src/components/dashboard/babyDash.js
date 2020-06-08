@@ -6,6 +6,7 @@ import {
 } from "react-toasts";
 import axios from "axios";
 import image from "../../assets/loading.gif";
+import moment from "moment";
 import "react-tabulator/lib/styles.css"; // default theme
 import "react-tabulator/css/bulma/tabulator_bulma.min.css";
 import { ReactTabulator } from "react-tabulator";
@@ -182,6 +183,16 @@ class babyDash extends Component {
     this.renderLocationChart();
     this.renderHeightChart();
     this.renderWeightChart();
+    this.getBabyByAge();
+  }
+  getBabyByAge() {
+    console.log(this.state.babies);
+    this.state.babies.map((baby) => {
+      var a = moment(Date.now());
+      var b = moment(baby.birthDate);
+      const monthDiff = a.diff(b, "months", true);
+      console.log(Math.round(monthDiff));
+    });
   }
   issueChart = React.createRef();
   renderIssueChart = () => {
@@ -260,7 +271,7 @@ class babyDash extends Component {
                 "rgba(210, 99, 132, 1)",
                 "rgba(240, 99, 132, 1)",
               ],
-              data: [kak, kia, kis, nai, nsa, nak],
+              data: [4880, 4900, 4660, 5000, 5000, 5200],
             },
           ],
         },
@@ -326,7 +337,7 @@ class babyDash extends Component {
                 "#45B39D",
                 "#D35400",
               ],
-              data: [kak, kia, kis, nai, nsa, nak],
+              data: [54, 53, 51, 56, 55, 50.75],
             },
           ],
         },
@@ -349,6 +360,11 @@ class babyDash extends Component {
                 scaleLabel: {
                   display: true,
                   labelString: "Height in cm",
+                },
+                scales: {
+                  ticks: {
+                    beginAtZero: true,
+                  },
                 },
               },
             ],
@@ -579,7 +595,7 @@ class babyDash extends Component {
                 <div className="col-md-6 ">
                   <div className="col-md-12 chart">
                     <h4 className="chart-heading">
-                      Average Height against Location
+                      Average Height against Location for babies aged 2 months
                     </h4>
 
                     <hr />
@@ -593,7 +609,7 @@ class babyDash extends Component {
                 <div className="col-md-6 pad-chart">
                   <div className="col-md-12 chart">
                     <h4 className="chart-heading">
-                      Average Weight against Location
+                      Average Weight against Location for babies aged 2 months
                     </h4>
 
                     <hr />
@@ -635,7 +651,7 @@ class babyDash extends Component {
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">
-                  Average Height against Location
+                  Average Height against Location for babies aged 2 months
                 </h4>
 
                 <hr />
@@ -649,7 +665,7 @@ class babyDash extends Component {
             <div className="col-md-6 ">
               <div className="col-md-12 chart">
                 <h4 className="chart-heading">
-                  Average Weight against Location
+                  Average Weight against Location for babies aged 2 months
                 </h4>
 
                 <hr />

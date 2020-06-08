@@ -16,6 +16,9 @@ import babyDash from "./components/dashboard/babyDash";
 import MetricInput from "./components/MetricInputs/MetricInput";
 import OCR from "./components/OCR/OCR";
 import Home from "./Home";
+import Child from "./components/privacy-policy/child";
+import Main from "./components/privacy-policy/main";
+
 function App() {
   return (
     <main>
@@ -31,6 +34,8 @@ function App() {
         <Route path="/user/profile" exact component={UserDetail} />
         <Route path="/about" exact component={About} />
         <Route path="/babyRegistration" exact component={babyRegistration} />
+        <Route path="/privacy-policy/main" exact component={Child} />
+        <Route path="/privacy-policy/child" exact component={Main} />
         <Route
           path="/babyRegistration/success/:id"
           component={successRegistered}

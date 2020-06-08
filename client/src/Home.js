@@ -24,7 +24,7 @@ class Home extends Component {
             data-aos-duration="1000"
             data-aos-easing="ease-in-quart"
           >
-            <h1 className="head">Envision the future</h1>
+            <h1 className="head">Envision The Future</h1>
             <h2 className="head2">
               Enhancing Healthcare Through Remote Infant Screening
             </h2>
@@ -43,7 +43,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="section-one" id="section_one">
-          <h1 className="text-center">What we do</h1>
+          <h1 className="text-center">What We Do</h1>
           <div
             className="row mt-4"
             data-aos="fade-in"
@@ -60,7 +60,7 @@ class Home extends Component {
                 We work with IoT(Internet of Things) and Machine Learning to
                 create easy-to-use technology which helps mothers easily measure
                 baby metrics such as height, weight, temperature, and skin
-                issues among others
+                issues among others.
               </h2>
             </div>
           </div>
@@ -85,7 +85,7 @@ class Home extends Component {
             <div className="col text-section text-content">
               <h2>
                 Help out the babies. If you are a doctor, you can see the status
-                of various babies from different locations and give them help
+                of various babies from different locations and give them help.
               </h2>
             </div>
           </div>
@@ -100,7 +100,7 @@ class Home extends Component {
           >
             <div className="col text-section text-content">
               <h2>
-                Use our data, analyze it further and give more meaning to it
+                Use our data, Analyze it further and give more meaning to it.
               </h2>
             </div>
             <div className="col">
@@ -130,7 +130,7 @@ class Home extends Component {
             <div className="col text-section text-content">
               <h2>
                 Become our partner and help save the babies of the new
-                generation{" "}
+                generation .
               </h2>
             </div>
           </div>
@@ -152,6 +152,15 @@ class Home extends Component {
                 </li>
                 <li>
                   <a href="/about">About Us</a>
+                </li>
+
+                <li>
+                  <a href="/privacy-policy/main">Privacy policy</a>
+                </li>
+                <li>
+                  <a href="/privacy-policy/child">
+                    Privacy policy for children
+                  </a>
                 </li>
                 <li>
                   <a
