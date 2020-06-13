@@ -177,6 +177,17 @@ class Signup extends Component {
                   </div>
                 </div>
               </div>
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1">
+                  Do you accept our terms and conditions?
+                </label>
+              </div>
+              <br />
               <button type="submit" className="btn btn-outline-primary">
                 Sign up
               </button>
