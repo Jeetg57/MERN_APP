@@ -20,7 +20,7 @@ app.use("/ocr", OCR_Route);
 app.use("/user", authRoute);
 //connect to db
 mongoose.connect(
-  process.env.DB_CONNECTION,
+  process.env.DB_CONNECTION_AZURE,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   () => console.log("connected to DB")
 );

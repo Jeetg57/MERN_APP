@@ -27,6 +27,7 @@ class Login extends Component {
         window.location = "/dashboard";
       })
       .catch((error) => {
+        console.log(error.response.data);
         this.setState(() => ({ message: error.response.data }));
       });
   };
