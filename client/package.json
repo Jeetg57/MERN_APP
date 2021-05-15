@@ -24,7 +24,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "^3.4.4",
     "react-smooth-scroll": "^0.1.0",
-    "react-tabulator": "^0.12.7",
+    "react-tabulator": "0.15.0",
     "react-toasts": "3.0.6",
     "smooth-scroll": "^16.1.3"
   },
