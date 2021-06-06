@@ -17,7 +17,7 @@
     "popper.js": "1.16.1",
     "react": "16.13.1",
     "react-anchor-link-smooth-scroll": "^1.0.12",
-    "react-bootstrap": "1.0.0",
+    "react-bootstrap": "1.6.1",
     "react-dom": "16.13.1",
     "react-icons": "^3.10.0",
     "react-motion": "^0.5.2",
